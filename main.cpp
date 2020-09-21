@@ -2,8 +2,10 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+
 #include <iostream>
 
+#include "Shader.h"
 
 
 int main()
@@ -34,15 +36,46 @@ int main()
     glfwGetFramebufferSize(window, &width, &height);
     glViewport(0, 0, width, height);
 
+
+    float vertices[] ={
+            -0.5f,  0.5f, 0.0f,
+            0.0f,  0.5f, 0.0f,
+            0.5f, -0.5f, 0.0f
+    };
+
+    unsigned int vbo;
+    glGenBuffers(1, &vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    glVertexAttribPointer(0, 3, GL_FLOAT, false, 3 * sizeof(float), nullptr);
+    glEnableVertexAttribArray(0);
+
+    OpenGL::Shader vertex_shader("../vertex.glsl", GL_VERTEX_SHADER);
+    OpenGL::Shader fragment_shader("../fragment.glsl", GL_FRAGMENT_SHADER);
+    unsigned int shader_program;
+    shader_program = glCreateProgram();
+    glAttachShader(shader_program, vertex_shader.get_shader_id());
+    glAttachShader(shader_program, fragment_shader.get_shader_id());
+    glLinkProgram(shader_program);
+    // TODO: add program linking error handling
+
+    glDeleteShader(vertex_shader.get_shader_id());
+    glDeleteShader(fragment_shader.get_shader_id());
+    glUseProgram(shader_program);
+
     while (!glfwWindowShouldClose(window))
     {
         glfwPollEvents();
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
-
+        glDrawArrays(GL_TRIANGLES, 0, 3);
         glfwSwapBuffers(window);
     }
+
+
     glfwTerminate();
+
 
     return 0;
 }
