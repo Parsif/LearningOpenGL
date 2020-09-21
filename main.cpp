@@ -39,19 +39,26 @@ int main()
 
     float vertices[] ={
            -0.5f,  -0.5f, 0.0f,
-            0.0f,   0.5f, 0.0f,
-            0.5f,  -0.5f, 0.0f
+           -0.5f,   0.5f, 0.0f,
+            0.5f,  -0.5f, 0.0f,
+            0.5f,   0.5f, 0.0f
     };
+    unsigned int indicies[] = {0, 1, 2, 2, 1, 3};
 
-    unsigned int vbo, vao;
+    unsigned int vbo, vao, ibo;
     glGenBuffers(1, &vbo);
     glGenVertexArrays(1, &vao);
+    glGenBuffers(1, &ibo);
 
     glBindVertexArray(vao);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-    glVertexAttribPointer(0, 3, GL_FLOAT, false, 3 * sizeof(float), nullptr);
-    glEnableVertexAttribArray(0);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indicies), indicies, GL_STATIC_DRAW);
+
+        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+        glVertexAttribPointer(0, 3, GL_FLOAT, false, 3 * sizeof(float), nullptr);
+        glEnableVertexAttribArray(0);
     glBindVertexArray(0);
 
     OpenGL::Shader vertex_shader("../vertex.glsl", GL_VERTEX_SHADER);
@@ -74,7 +81,7 @@ int main()
 
         glUseProgram(shader_program);
         glBindVertexArray(vao);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
 
         glfwSwapBuffers(window);
