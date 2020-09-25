@@ -5,7 +5,7 @@
 
 #include <GL/glew.h>
 
-namespace OpenGL
+namespace opengl
 {
     Shader::Shader(const std::string &shader_filename, const int shader_type) : shader_type_(shader_type)
     {
@@ -29,7 +29,7 @@ namespace OpenGL
         {
             char info_log[512];
             glGetShaderInfoLog(shader_id_, sizeof(info_log), nullptr, info_log);
-            std::cerr << info_log << '\n';
+            std::cerr <<  shader_filename << " " << info_log << '\n';
         }
 
     }

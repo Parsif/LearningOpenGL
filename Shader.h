@@ -4,7 +4,7 @@
 #include <string>
 
 
-namespace OpenGL
+namespace opengl
 {
     class Shader
     {
@@ -13,7 +13,7 @@ namespace OpenGL
         int shader_type_;
     public:
         Shader(const std::string &shader_filename, int shader_type);
-        [[nodiscard]] inline const auto& get_shader_id() const { return shader_id_; }
+        [[nodiscard]] inline auto get_shader_id() const { return shader_id_; }
     };
 }
 
