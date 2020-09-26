@@ -1,5 +1,6 @@
 #include "Application.h"
 #include "ShaderProgram.h"
+#include "Texture.h"
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -41,12 +42,13 @@ namespace opengl
         glViewport(0, 0, width, height);
 
         float vertices[] ={
-                // coord             // color
-               -0.5f,  -0.5f,  0.0f,  1.f, 0.f, 0.f,
-               -0.5f,   0.5f,  0.0f,  0.f, 1.f, 0.f,
-                0.5f,  -0.5f,  0.0f,  0.f, 0.f, 1.f,
-                0.5f,   0.5f,  0.0f,  0.f, 0.f, 0.f
+                // coord             // color        //texture_coord
+               -0.5f,  -0.5f,  0.0f,  1.f, 0.f, 0.f,  0.f, 0.f,
+               -0.5f,   0.5f,  0.0f,  0.f, 1.f, 0.f,  0.f, 1.f,
+                0.5f,  -0.5f,  0.0f,  0.f, 0.f, 1.f,  1.f, 0.f,
+                0.5f,   0.5f,  0.0f,  0.f, 0.f, 0.f,  1.f, 1.f
         };
+
         unsigned int indices[] = {0, 1, 2, 2, 1, 3};
 
         unsigned int vbo, vao, ibo;
@@ -62,19 +64,26 @@ namespace opengl
             glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
             //coord attrib
-            glVertexAttribPointer(0, 3, GL_FLOAT, false, 6 * sizeof(float), nullptr);
+            glVertexAttribPointer(0, 3, GL_FLOAT, false, 8 * sizeof(float), nullptr);
             glEnableVertexAttribArray(0);
 
             //color attrib
-            glVertexAttribPointer(1, 3, GL_FLOAT, false, 6 * sizeof(float),
+            glVertexAttribPointer(1, 3, GL_FLOAT, false, 8 * sizeof(float),
                                   reinterpret_cast<const void *>(sizeof(float) * 3));
             glEnableVertexAttribArray(1);
+
+            //texture coord attrib
+            glVertexAttribPointer(2, 2, GL_FLOAT, false, 8 * sizeof(float),
+                                  reinterpret_cast<const void *>(sizeof(float) * 6));
+            glEnableVertexAttribArray(2);
 
         glBindVertexArray(0);
 
         Shader vertex_shader("../vertex.glsl", GL_VERTEX_SHADER);
         Shader fragment_shader("../fragment.glsl", GL_FRAGMENT_SHADER);
         ShaderProgram shader_program({vertex_shader, fragment_shader});
+
+        Texture texture("../res/awesomeface.png");
         while (!glfwWindowShouldClose(window))
         {
             glfwPollEvents();
@@ -84,7 +93,9 @@ namespace opengl
             shader_program.UseShaderProgram();
             shader_program.Uniform4f("myColor", 0.3f, 0.f, 0.3f, 1.f);
             glBindVertexArray(vao);
+            texture.Bind();
             glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+            texture.UnBind();
             glBindVertexArray(0);
 
             glfwSwapBuffers(window);
