@@ -2,8 +2,9 @@
 #include "ShaderProgram.h"
 #include "Texture.h"
 
-#include <GL/glew.h>
 #include <GLFW/glfw3.h>
+
+#include <glm/gtc/matrix_transform.hpp>
 
 #include <iostream>
 
@@ -43,10 +44,10 @@ namespace opengl
 
         float vertices[] ={
                 // coord             // color        //texture_coord
-               -0.5f,  -0.5f,  0.0f,  1.f, 0.f, 0.f,  0.f, 0.f,
-               -0.5f,   0.5f,  0.0f,  0.f, 1.f, 0.f,  0.f, 1.f,
-                0.5f,  -0.5f,  0.0f,  0.f, 0.f, 1.f,  1.f, 0.f,
-                0.5f,   0.5f,  0.0f,  0.f, 0.f, 0.f,  1.f, 1.f
+               -0.5f,  -0.5f,  0.0f,  1.f, 0.f, 0.f,  0.0f, 0.0f,
+               -0.5f,   0.5f,  0.0f,  0.f, 1.f, 0.f,  0.0f, 1.0f,
+                0.5f,  -0.5f,  0.0f,  0.f, 0.f, 1.f,  1.0f, 0.0f,
+                0.5f,   0.5f,  0.0f,  0.f, 0.f, 0.f,  1.0f, 1.0f
         };
 
         unsigned int indices[] = {0, 1, 2, 2, 1, 3};
@@ -83,7 +84,20 @@ namespace opengl
         Shader fragment_shader("../fragment.glsl", GL_FRAGMENT_SHADER);
         ShaderProgram shader_program({vertex_shader, fragment_shader});
 
-        Texture texture("../res/awesomeface.png");
+        Texture face_texture("../res/awesomeface.png");
+        Texture container_texture("../res/container.jpg");
+
+        glm::mat4 trans;
+        trans = glm::rotate(trans,glm::radians(90.0f), glm::vec3(0.0, 0.0, 1.0));
+        trans = glm::scale(trans, glm::vec3(0.5, 0.5, 0.5));
+
+
+        glm::vec4 vec(1.0f, 0.0f, 0.0f, 1.0f);
+        glm::mat4 trans2;
+        trans2 = glm::translate(trans2, glm::vec3(1.0f, 1.0f, 0.0f));
+        vec = trans2 * vec;
+        std::cout << vec.x << vec.y << vec.z << std::endl;
+
         while (!glfwWindowShouldClose(window))
         {
             glfwPollEvents();
@@ -91,11 +105,15 @@ namespace opengl
             glClear(GL_COLOR_BUFFER_BIT);
 
             shader_program.UseShaderProgram();
-            shader_program.Uniform4f("myColor", 0.3f, 0.f, 0.3f, 1.f);
+            shader_program.Uniform1i("u_face_texture", 0);
+            shader_program.Uniform1i("u_container_texture", 1);
+            shader_program.UniformMatrix4fv("u_matrix", trans);
             glBindVertexArray(vao);
-            texture.Bind();
-            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-            texture.UnBind();
+                face_texture.Bind();
+                container_texture.Bind(1);
+                glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+                container_texture.UnBind();
+                face_texture.UnBind();
             glBindVertexArray(0);
 
             glfwSwapBuffers(window);
@@ -103,8 +121,6 @@ namespace opengl
         glDeleteVertexArrays(1, &vao);
         glDeleteBuffers(1, &vbo);
         glDeleteBuffers(1, &ibo);
-
-
     }
 
     Application::~Application()

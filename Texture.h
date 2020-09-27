@@ -16,7 +16,7 @@ namespace opengl
         Texture(const std::string &texture_path);
         ~Texture();
 
-        void Bind(int slot = 0) const;
+        void Bind(unsigned int slot = 0) const;
         void UnBind() const;
     };
 }
