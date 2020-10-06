@@ -3,9 +3,11 @@ project(LearningOpenGL)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(LearningOpenGL main.cpp Shader.cpp Shader.h Application.cpp Application.h ShaderProgram.cpp ShaderProgram.h Texture.cpp Texture.h vendor/std_image.h vendor/stb_image.cpp VertexArrayObject.cpp VertexArrayObject.h VertexBufferObject.cpp VertexBufferObject.h)
+add_executable(LearningOpenGL src/main.cpp src/Shader.cpp src/Shader.h src/Application.cpp src/Application.h
+        src/ShaderProgram.cpp src/ShaderProgram.h src/Texture.cpp src/Texture.h vendor/std_image.h vendor/stb_image.cpp
+        src/Camera.cpp src/buffers/IndexBuffer.cpp src/buffers/VertexArray.cpp src/buffers/VertexBuffer.cpp)
 
-target_include_directories(LearningOpenGL PRIVATE vendor)
+target_include_directories(LearningOpenGL PRIVATE vendor src)
 
 find_package(glfw3 3.3 REQUIRED)
 find_package(GLEW REQUIRED)
