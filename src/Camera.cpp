@@ -8,4 +8,9 @@ namespace opengl
 	{
 		view_ = glm::lookAt(position_, target_position, up);
 	}
+
+    void Camera::move(const float moveXAmount, const float moveYAmount)
+    {
+
+    }
 }

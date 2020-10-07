@@ -7,6 +7,7 @@
 #include "buffers/VertexBuffer.h"
 #include "buffers/IndexBuffer.h"
 #include "Camera.h"
+#include "EventHandler.h"
 
 #include <GLFW/glfw3.h>
 
@@ -119,19 +120,16 @@ namespace opengl
         const Texture face_texture("../res/awesomeface.png");
         const Texture container_texture("../res/container.jpg");
 
-
-
+        Camera camera(glm::vec3(0.f, 0.f, 10.f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
+        EventHandler::init(window, camera);
         while (!glfwWindowShouldClose(window))
         {
-			Camera camera(glm::vec3(0.f, 0.f, 10.f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
-       
             glm::mat4 projection(1.0f);
             projection = glm::perspective(glm::radians(45.f), static_cast<float>(width) / height, 0.1f, 100.f);
 
             glfwPollEvents();
             glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 
             shader_program.UseShaderProgram();
             shader_program.Uniform1i("u_face_texture", 0);
