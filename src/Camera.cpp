@@ -14,22 +14,27 @@ namespace opengl
     void Camera::move(Direction direction)
     {
         const float kCameraSpeed = 0.3f;
-        const glm::vec3 kFrontVec(0.0f, 0.0f, -1.0f);
         switch (direction)
         {
             case Direction::up:
-                position_ += kFrontVec * kCameraSpeed;
+                position_ += target_position_ * kCameraSpeed;
                 break;
             case Direction::down:
-                position_ -= kFrontVec * kCameraSpeed;
+                position_ -= target_position_ * kCameraSpeed;
                 break;
             case Direction::right:
-                position_ += glm::normalize(glm::cross(kFrontVec, world_up_)) * kCameraSpeed;
+                position_ += glm::normalize(glm::cross(target_position_, world_up_)) * kCameraSpeed;
                 break;
             case Direction::left:
-                position_ -= glm::normalize(glm::cross(kFrontVec, world_up_)) * kCameraSpeed;
+                position_ -= glm::normalize(glm::cross(target_position_, world_up_)) * kCameraSpeed;
                 break;
         }
+        view_ = glm::lookAt(position_, target_position_, world_up_);
+    }
+
+    void Camera::rotate(const glm::vec3 &target)
+    {
+        target_position_ = target;
         view_ = glm::lookAt(position_, target_position_, world_up_);
     }
 

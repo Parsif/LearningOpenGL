@@ -15,6 +15,7 @@ namespace opengl
 	public:
 		Camera(const glm::vec3& position, const glm::vec3& target_position, const glm::vec3& world_up);
 		void move(Direction direction);
+		void rotate(const glm::vec3 &target);
 		[[nodiscard]] inline const auto& getViewMatrix() const { return view_; }
 	};
 }
