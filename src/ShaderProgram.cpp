@@ -53,4 +53,9 @@ namespace opengl
         glUniformMatrix4fv(uniform_location, 1, GL_FALSE, glm::value_ptr(matrix));
     }
 
+    void ShaderProgram::uniformVec3f(const std::string &uniform_name, const glm::vec3 &vec) const
+    {
+        const auto uniform_location = glGetUniformLocation(shader_program_id_, uniform_name.c_str());
+        glUniform3f(uniform_location, vec.x, vec.y, vec.z);
+    }
 }
