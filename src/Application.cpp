@@ -1,12 +1,14 @@
 #include "Application.h"
 
-#include "buffers/VertexBuffer.h"
 #include "EventHandler.h"
+#include "buffers/VertexBuffer.h"
+#include "drawable/Lamp.h"
+#include "materials.h"
+
 
 #include <glm/gtc/matrix_transform.hpp>
 
 #include <iostream>
-#include "drawable/Lamp.h"
 
 
 namespace opengl
@@ -132,19 +134,27 @@ namespace opengl
     void Application::drawObject(const ShaderProgram &shader_program, const VertexArray &vertex_array, glm::vec3 light_pos)
     {
         glm::mat4 model(1.0f);
-        //model = glm::rotate(model, glm::radians((GLfloat)glfwGetTime() * 50.0f), glm::vec3(0.5f, 1.f, 0.f));
+        model = glm::rotate(model, glm::radians((GLfloat)glfwGetTime() * 50.0f), glm::vec3(0.5f, 1.f, 0.f));
         glm::vec3 light_color(1.0f, 1.0f, 1.0f);
-        glm::vec3 object_color(1.0f, 0.5f, 0.31f);
+        glm::vec3 object_color(1.0f, 0.4f, 0.31f);
 
         shader_program.UseShaderProgram();
-        shader_program.uniformVec3f("u_object_color", object_color);
-        shader_program.uniformVec3f("u_light_color", light_color);
-        shader_program.uniformVec3f("u_light_pos", light_pos);
         shader_program.uniformVec3f("u_view_pos", camera_->getGetPosition());
+        shader_program.uniformVec3f("u_object_color", object_color);
 
-        shader_program.UniformMatrix4fv("u_model", model);
-        shader_program.UniformMatrix4fv("u_view", camera_->getViewMatrix());
-        shader_program.UniformMatrix4fv("u_projection", projection_);
+        shader_program.uniformVec3f("u_light.ambient", glm::vec3(1.0f));
+        shader_program.uniformVec3f("u_light.diffuse", glm::vec3(1.0f));
+        shader_program.uniformVec3f("u_light.specular", glm::vec3(1.0f));
+        shader_program.uniformVec3f("u_light.position", light_pos);
+
+        shader_program.uniformVec3f("u_material.ambient", materials::gold.ambient);
+        shader_program.uniformVec3f("u_material.diffuse", materials::gold.diffuse);
+        shader_program.uniformVec3f("u_material.specular", materials::gold.specular);
+        shader_program.uniform1f("u_material.shininess", materials::gold.shininess);
+
+        shader_program.uniformMatrix4fv("u_model", model);
+        shader_program.uniformMatrix4fv("u_view", camera_->getViewMatrix());
+        shader_program.uniformMatrix4fv("u_projection", projection_);
 
         vertex_array.bind();
         glDrawArrays(GL_TRIANGLES, 0, 36);

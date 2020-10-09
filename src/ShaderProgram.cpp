@@ -35,19 +35,25 @@ namespace opengl
         glUseProgram(shader_program_id_);
     }
 
-    void ShaderProgram::Uniform1i(const std::string &uniform_name, int value1) const
+    void ShaderProgram::uniform1i(const std::string &uniform_name, int value1) const
     {
         const auto uniform_location = glGetUniformLocation(shader_program_id_, uniform_name.c_str());
         glUniform1i(uniform_location, value1);
     }
 
-    void ShaderProgram::Uniform4f(const std::string &uniform_name, float value1, float value2, float value3, float value4) const
+    void ShaderProgram::uniform1f(const std::string &uniform_name, float value1) const
+    {
+        const auto uniform_location = glGetUniformLocation(shader_program_id_, uniform_name.c_str());
+        glUniform1f(uniform_location, value1);
+    }
+
+    void ShaderProgram::uniform4f(const std::string &uniform_name, float value1, float value2, float value3, float value4) const
     {
         const auto uniform_location = glGetUniformLocation(shader_program_id_, uniform_name.c_str());
         glUniform4f(uniform_location, value1, value2, value3, value4);
     }
 
-    void ShaderProgram::UniformMatrix4fv(const std::string &uniform_name, const glm::mat4 &matrix) const
+    void ShaderProgram::uniformMatrix4fv(const std::string &uniform_name, const glm::mat4 &matrix) const
     {
         const auto uniform_location = glGetUniformLocation(shader_program_id_, uniform_name.c_str());
         glUniformMatrix4fv(uniform_location, 1, GL_FALSE, glm::value_ptr(matrix));
@@ -58,4 +64,6 @@ namespace opengl
         const auto uniform_location = glGetUniformLocation(shader_program_id_, uniform_name.c_str());
         glUniform3f(uniform_location, vec.x, vec.y, vec.z);
     }
+
+
 }

@@ -30,9 +30,9 @@ namespace opengl
             return;
         }
         shader_program_->UseShaderProgram();
-        shader_program_->UniformMatrix4fv("u_model", model_);
-        shader_program_->UniformMatrix4fv("u_view", view_matrix);
-        shader_program_->UniformMatrix4fv("u_projection", projection_matrix);
+        shader_program_->uniformMatrix4fv("u_model", model_);
+        shader_program_->uniformMatrix4fv("u_view", view_matrix);
+        shader_program_->uniformMatrix4fv("u_projection", projection_matrix);
 
         vertex_array_.bind();
             glDrawArrays(GL_TRIANGLES, 0, 36);
