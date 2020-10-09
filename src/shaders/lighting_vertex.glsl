@@ -7,11 +7,11 @@ uniform mat4 u_view;
 uniform mat4 u_projection;
 
 out vec3 vs_normal;
-out vec4 vs_frag_pos;
+out vec3 vs_frag_pos;
 
 void main()
 {
     gl_Position = u_projection * u_view * u_model * vec4(position, 1.0f);
-    vs_normal = normal;
-    vs_frag_pos = u_model * vec4(position, 1.0f);
+    vs_normal = mat3(transpose(inverse(u_model))) * normal;
+    vs_frag_pos = vec3(u_model * vec4(position, 1.0f));
 }

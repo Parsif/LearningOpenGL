@@ -17,6 +17,7 @@ namespace opengl
 		void move(Direction direction);
 		void rotate(const glm::vec3 &target);
 		[[nodiscard]] inline const auto& getViewMatrix() const { return view_; }
-	};
+        [[nodiscard]] inline const auto& getGetPosition() const { return position_; }
+    };
 }
 

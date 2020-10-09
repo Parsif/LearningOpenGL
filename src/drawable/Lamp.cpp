@@ -5,10 +5,11 @@
 
 namespace opengl
 {
-    Lamp::Lamp()
+    Lamp::Lamp(const VertexBuffer &vertex_buffer)
     {
         vertex_array_.bind();
         //coord attrib
+        vertex_buffer.bind();
         glVertexAttribPointer(0, 3, GL_FLOAT, false, 6 * sizeof(float), nullptr);
         glEnableVertexAttribArray(0);
         vertex_array_.unbind();

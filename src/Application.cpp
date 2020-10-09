@@ -100,7 +100,7 @@ namespace opengl
         };
 
         VertexBuffer vertex_buffer(vertices, sizeof(vertices));
-        VertexArray object_vertex_array, lamp_vertex_array;
+        VertexArray object_vertex_array;
         object_vertex_array.bind();
             //coord attrib
             glVertexAttribPointer(0, 3, GL_FLOAT, false, 6 * sizeof(float), nullptr);
@@ -115,7 +115,7 @@ namespace opengl
         const Shader light_vertex_shader("../src/shaders/lighting_vertex.glsl", GL_VERTEX_SHADER);
         const Shader light_fragment_shader("../src/shaders/lighting_fragment.glsl", GL_FRAGMENT_SHADER);
         const ShaderProgram light_shader_program({light_vertex_shader, light_fragment_shader});
-        Lamp lamp;
+        Lamp lamp(vertex_buffer);
 
         while (!glfwWindowShouldClose(window))
         {
@@ -132,7 +132,7 @@ namespace opengl
     void Application::drawObject(const ShaderProgram &shader_program, const VertexArray &vertex_array, glm::vec3 light_pos)
     {
         glm::mat4 model(1.0f);
-        model = glm::rotate(model, glm::radians((GLfloat)glfwGetTime() * 50.0f), glm::vec3(0.5f, 1.f, 0.f));
+        //model = glm::rotate(model, glm::radians((GLfloat)glfwGetTime() * 50.0f), glm::vec3(0.5f, 1.f, 0.f));
         glm::vec3 light_color(1.0f, 1.0f, 1.0f);
         glm::vec3 object_color(1.0f, 0.5f, 0.31f);
 
@@ -140,6 +140,7 @@ namespace opengl
         shader_program.uniformVec3f("u_object_color", object_color);
         shader_program.uniformVec3f("u_light_color", light_color);
         shader_program.uniformVec3f("u_light_pos", light_pos);
+        shader_program.uniformVec3f("u_view_pos", camera_->getGetPosition());
 
         shader_program.UniformMatrix4fv("u_model", model);
         shader_program.UniformMatrix4fv("u_view", camera_->getViewMatrix());
