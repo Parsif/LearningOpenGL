@@ -19,10 +19,10 @@ namespace opengl
         int window_width_, window_height_;
         std::shared_ptr<Camera> camera_ = std::make_shared<Camera>(glm::vec3(0.f, 0.f, 3.f),
                                    glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
+        glm::mat4 projection_{1.0f};
 
     private:
-        void drawLamp(const ShaderProgram &shader_program, const VertexArray &vertex_array, const glm::mat4 &projection);
-        void drawObject(const ShaderProgram &shader_program, const VertexArray &vertex_array, const glm::mat4 &projection);
+        void drawObject(const ShaderProgram &shader_program, const VertexArray &vertex_array, glm::vec3 light_pos);
     public:
         Application();
         ~Application();
