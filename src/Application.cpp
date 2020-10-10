@@ -58,60 +58,64 @@ namespace opengl
 
 
         float vertices[] ={
-                -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-                0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-                0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-                0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-                -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-                -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+                // positions          // normals           // texture coords
+                -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 0.0f,
+                0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 0.0f,
+                0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 1.0f,
+                0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 1.0f,
+                -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 1.0f,
+                -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 0.0f,
 
-                -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
-                0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
-                0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
-                0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
-                -0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
-                -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+                -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 0.0f,
+                0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 0.0f,
+                0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 1.0f,
+                0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 1.0f,
+                -0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 1.0f,
+                -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 0.0f,
 
-                -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
-                -0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
-                -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
-                -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
-                -0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
-                -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+                -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
+                -0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 1.0f,
+                -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
+                -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
+                -0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 0.0f,
+                -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
 
-                0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
-                0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-                0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-                0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-                0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
-                0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+                0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
+                0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 1.0f,
+                0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
+                0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
+                0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 0.0f,
+                0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
 
-                -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
-                0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
-                0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
-                0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
-                -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
-                -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+                -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 1.0f,
+                0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 1.0f,
+                0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 0.0f,
+                0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 0.0f,
+                -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 0.0f,
+                -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 1.0f,
 
-                -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
-                0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
-                0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-                0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-                -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-                -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
+                -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f,
+                0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 1.0f,
+                0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 0.0f,
+                0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 0.0f,
+                -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 0.0f,
+                -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f
         };
 
         VertexBuffer vertex_buffer(vertices, sizeof(vertices));
         VertexArray object_vertex_array;
         object_vertex_array.bind();
             //coord attrib
-            glVertexAttribPointer(0, 3, GL_FLOAT, false, 6 * sizeof(float), nullptr);
+            glVertexAttribPointer(0, 3, GL_FLOAT, false, 8 * sizeof(float), nullptr);
             glEnableVertexAttribArray(0);
 
             // normal vector attrib
-            glVertexAttribPointer(1, 3, GL_FLOAT, false, 6 * sizeof(float),
+            glVertexAttribPointer(1, 3, GL_FLOAT, false, 8 * sizeof(float),
                                   reinterpret_cast<const void *>(sizeof(float) * 3));
             glEnableVertexAttribArray(1);
+            glVertexAttribPointer(2, 2, GL_FLOAT, false, 8 * sizeof(float),
+                                  reinterpret_cast<const void *>(sizeof(float) * 6));
+            glEnableVertexAttribArray(2);
         object_vertex_array.unbind();
 
         const Shader light_vertex_shader("../src/shaders/lighting_vertex.glsl", GL_VERTEX_SHADER);
@@ -119,19 +123,23 @@ namespace opengl
         const ShaderProgram light_shader_program({light_vertex_shader, light_fragment_shader});
         Lamp lamp(vertex_buffer);
 
+        Texture container_texture("../res/container2.png");
+        Texture container_specular_texture("../res/container2_specular.png");
+
+
         while (!glfwWindowShouldClose(window))
         {
             glfwPollEvents();
             glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-            drawObject(light_shader_program, object_vertex_array, lamp.getPosition());
+            drawObject(light_shader_program, object_vertex_array, lamp.getPosition(), container_texture, container_specular_texture);
             lamp.draw(camera_->getViewMatrix(), projection_);
             glfwSwapBuffers(window);
         }
     }
 
-    void Application::drawObject(const ShaderProgram &shader_program, const VertexArray &vertex_array, glm::vec3 light_pos)
+    void Application::drawObject(const ShaderProgram &shader_program, const VertexArray &vertex_array, glm::vec3 light_pos, const Texture &texture, const Texture &specular_texture)
     {
         glm::mat4 model(1.0f);
         model = glm::rotate(model, glm::radians((GLfloat)glfwGetTime() * 50.0f), glm::vec3(0.5f, 1.f, 0.f));
@@ -142,22 +150,29 @@ namespace opengl
         shader_program.uniformVec3f("u_view_pos", camera_->getGetPosition());
         shader_program.uniformVec3f("u_object_color", object_color);
 
-        shader_program.uniformVec3f("u_light.ambient", glm::vec3(1.0f));
-        shader_program.uniformVec3f("u_light.diffuse", glm::vec3(1.0f));
+        shader_program.uniformVec3f("u_light.ambient", glm::vec3(0.2f));
+        shader_program.uniformVec3f("u_light.diffuse", glm::vec3(0.5f));
         shader_program.uniformVec3f("u_light.specular", glm::vec3(1.0f));
         shader_program.uniformVec3f("u_light.position", light_pos);
 
-        shader_program.uniformVec3f("u_material.ambient", materials::gold.ambient);
-        shader_program.uniformVec3f("u_material.diffuse", materials::gold.diffuse);
-        shader_program.uniformVec3f("u_material.specular", materials::gold.specular);
+        shader_program.uniform1i("u_material.diffuse", 0);
+        shader_program.uniform1i("u_material.specular", 1);
         shader_program.uniform1f("u_material.shininess", materials::gold.shininess);
+
 
         shader_program.uniformMatrix4fv("u_model", model);
         shader_program.uniformMatrix4fv("u_view", camera_->getViewMatrix());
         shader_program.uniformMatrix4fv("u_projection", projection_);
 
+        texture.Bind();
+        specular_texture.Bind(1);
+
         vertex_array.bind();
         glDrawArrays(GL_TRIANGLES, 0, 36);
         vertex_array.unbind();
+
+        texture.UnBind();
+        specular_texture.UnBind();
+
     }
 }

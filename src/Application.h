@@ -7,6 +7,7 @@
 #include "buffers/VertexArray.h"
 
 #include "global.h"
+#include "Texture.h"
 
 #include <memory>
 
@@ -22,7 +23,7 @@ namespace opengl
         glm::mat4 projection_{1.0f};
 
     private:
-        void drawObject(const ShaderProgram &shader_program, const VertexArray &vertex_array, glm::vec3 light_pos);
+        void drawObject(const ShaderProgram &shader_program, const VertexArray &vertex_array, glm::vec3 light_pos, const Texture &texture, const Texture &specular_texture);
     public:
         Application();
         ~Application();

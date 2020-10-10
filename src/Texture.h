@@ -13,7 +13,7 @@ namespace opengl
         unsigned char* image_buffer_ = nullptr;
         int width_ = 0, height_ = 0, BPP_;
     public:
-        Texture(const std::string &texture_path);
+        explicit Texture(const std::string &texture_path);
         ~Texture();
 
         void Bind(unsigned int slot = 0) const;
