@@ -19,20 +19,20 @@ namespace opengl
 
         const Shader lamp_vertex_shader("../src/shaders/lamp_vertex.glsl", GL_VERTEX_SHADER);
         const Shader lamp_fragment_shader("../src/shaders/lamp_fragment.glsl", GL_FRAGMENT_SHADER);
-        shader_program_ = ShaderProgram({lamp_fragment_shader, lamp_vertex_shader});
+        lamp_shader_program_ = ShaderProgram({lamp_fragment_shader, lamp_vertex_shader});
     }
 
-    void Lamp::draw(const glm::mat4 &view_matrix, const glm::mat4 &projection_matrix) const
+    void Lamp::render(const glm::mat4 &view_matrix, const glm::mat4 &projection_matrix) const
     {
-        if (!shader_program_)
+        if (!lamp_shader_program_)
         {
             std::cerr << "Empty shader program\n";
             return;
         }
-        shader_program_->UseShaderProgram();
-        shader_program_->uniformMatrix4fv("u_model", model_);
-        shader_program_->uniformMatrix4fv("u_view", view_matrix);
-        shader_program_->uniformMatrix4fv("u_projection", projection_matrix);
+        lamp_shader_program_->UseShaderProgram();
+        lamp_shader_program_->uniformMatrix4fv("u_model", model_);
+        lamp_shader_program_->uniformMatrix4fv("u_view", view_matrix);
+        lamp_shader_program_->uniformMatrix4fv("u_projection", projection_matrix);
 
         vertex_array_.bind();
             glDrawArrays(GL_TRIANGLES, 0, 36);

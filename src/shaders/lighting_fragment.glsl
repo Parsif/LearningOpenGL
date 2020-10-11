@@ -44,5 +44,5 @@ void main()
     float specular_angle = pow(max(dot(view_direction, reflect_light_direction), 0.0f), u_material.shininess);
     vec3 specular = u_light.specular * specular_angle * vec3(texture(u_material.specular, vs_tex_coords));
 
-    color = vec4((ambient + diffuse + specular) * u_object_color, 1.0f);
+    color = vec4((ambient + diffuse + specular), 1.0f);
 }

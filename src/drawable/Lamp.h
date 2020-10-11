@@ -17,10 +17,10 @@ namespace opengl
         VertexArray vertex_array_;
         glm::vec3 position_{1.2f, 1.0f, 2.0f};
         glm::mat4 model_{1.0f};
-        std::optional<ShaderProgram> shader_program_;
+        std::optional<ShaderProgram> lamp_shader_program_;
     public:
         explicit Lamp(const VertexBuffer &vertex_buffer);
-        void draw(const glm::mat4 &view_matrix, const glm::mat4 &projection_matrix) const;
+        void render(const glm::mat4 &view_matrix, const glm::mat4 &projection_matrix) const;
 
         [[nodiscard]] inline auto getPosition() const { return position_; }
     };
