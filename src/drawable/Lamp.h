@@ -15,7 +15,7 @@ namespace opengl
     {
     private:
         VertexArray vertex_array_;
-        glm::vec3 position_{1.2f, 1.0f, 2.0f};
+        glm::vec3 position_{2.f, 0.0f, 2.0f};
         glm::mat4 model_{1.0f};
         std::optional<ShaderProgram> lamp_shader_program_;
     public:

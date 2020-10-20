@@ -21,7 +21,7 @@ namespace opengl
         VertexArray vertex_array_;
         glm::vec3 position_{0.0f, 0.0f, 0.0f};
         glm::vec3 color_{1.0f, 0.4f, 0.31f};
-        glm::mat4 model_{1.0f};
+        glm::mat4 model_matrix_{1.0f};
 
         std::optional<ShaderProgram> light_shader_program_;
         Texture container_texture_{"../res/container2.png"};
