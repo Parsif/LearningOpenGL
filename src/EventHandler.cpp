@@ -28,7 +28,6 @@ namespace opengl
 
     void EventHandler::mouseCallback(GLFWwindow *window, double xpos, double ypos)
     {
-
         float xoffset = xpos - mouse_pos_.x;
         float yoffset = mouse_pos_.y - ypos;
         mouse_pos_.x = xpos;

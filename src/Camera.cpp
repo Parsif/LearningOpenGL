@@ -2,40 +2,49 @@
 
 #include "glm/gtc/matrix_transform.hpp"
 
+#include <iostream>
 
 namespace opengl
 {
-	Camera::Camera(const glm::vec3& position, const glm::vec3& target_position, const glm::vec3& world_up) :
-	        position_(position), target_position_(target_position), world_up_(world_up)
+	Camera::Camera(const glm::vec3& position, const glm::vec3& front, const glm::vec3& up) :
+            position_(position), front_(front), up_(up)
 	{
-		view_ = glm::lookAt(position_, target_position_, world_up_);
+		view_ = glm::lookAt(position_, position_ + front_, up_);
 	}
 
     void Camera::move(Direction direction)
     {
         const float kCameraSpeed = 0.3f;
+        glm::vec3 pos;
         switch (direction)
         {
             case Direction::up:
-                position_ += target_position_ * kCameraSpeed;
+                pos = front_ * kCameraSpeed;
+                position_ += front_ * kCameraSpeed;
                 break;
             case Direction::down:
-                position_ -= target_position_ * kCameraSpeed;
+                pos = front_ * kCameraSpeed;
+                position_ -= front_ * kCameraSpeed;
                 break;
             case Direction::right:
-                position_ += glm::normalize(glm::cross(target_position_, world_up_)) * kCameraSpeed;
+                pos = glm::normalize(glm::cross(front_, up_)) * kCameraSpeed;
+                position_ += glm::normalize(glm::cross(front_, up_)) * kCameraSpeed;
                 break;
             case Direction::left:
-                position_ -= glm::normalize(glm::cross(target_position_, world_up_)) * kCameraSpeed;
+                pos = glm::normalize(glm::cross(front_, up_)) * kCameraSpeed;
+                position_ -= glm::normalize(glm::cross(front_, up_)) * kCameraSpeed;
                 break;
         }
-        view_ = glm::lookAt(position_, target_position_, world_up_);
+        std::cout << "Translate: "<< pos.x  << " " << pos.y << " " << pos.z << '\n';
+
+        std::cout << "Position: "<< position_.x  << " " << position_.y << " " << position_.z << '\n';
+        view_ = glm::lookAt(position_, position_ + front_, up_);
     }
 
     void Camera::rotate(const glm::vec3 &target)
     {
-        target_position_ = target;
-        view_ = glm::lookAt(position_, target_position_, world_up_);
+        front_ = target;
+        view_ = glm::lookAt(position_, position_ + front_, up_);
     }
 
 }

@@ -17,10 +17,11 @@ namespace opengl
     Application::Application()
     {
         glfwInit();
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
         glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+
     }
 
     Application::~Application()
@@ -45,6 +46,10 @@ namespace opengl
             std::cout << "GLEW init failed\n";
             return;
         }
+
+        glEnable(GL_DEBUG_OUTPUT);
+        glDebugMessageCallback(messageCallback, nullptr);
+        glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
 
         glfwGetFramebufferSize(window, &window_width_, &window_height_);
         glViewport(0, 0, window_width_, window_height_);
@@ -118,6 +123,53 @@ namespace opengl
 
             glfwSwapBuffers(window);
         }
+    }
+
+    void Application::messageCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length,
+                                      const GLchar *message, const void *user_param)
+    {
+        auto source_str = [source]() -> std::string {
+            switch (source)
+            {
+                case GL_DEBUG_SOURCE_API: return "API";
+                case GL_DEBUG_SOURCE_WINDOW_SYSTEM: return "WINDOW SYSTEM";
+                case GL_DEBUG_SOURCE_SHADER_COMPILER: return "SHADER COMPILER";
+                case GL_DEBUG_SOURCE_THIRD_PARTY:  return "THIRD PARTY";
+                case GL_DEBUG_SOURCE_APPLICATION: return "APPLICATION";
+                case GL_DEBUG_SOURCE_OTHER: return "OTHER";
+                default: return "UNKNOWN";
+            }
+        }();
+
+        auto type_str = [type]() {
+            switch (type)
+            {
+                case GL_DEBUG_TYPE_ERROR: return "ERROR";
+                case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR: return "DEPRECATED_BEHAVIOR";
+                case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR: return "UNDEFINED_BEHAVIOR";
+                case GL_DEBUG_TYPE_PORTABILITY: return "PORTABILITY";
+                case GL_DEBUG_TYPE_PERFORMANCE: return "PERFORMANCE";
+                case GL_DEBUG_TYPE_MARKER:  return "MARKER";
+                case GL_DEBUG_TYPE_OTHER: return "OTHER";
+                default: return "UNKNOWN";
+            }
+        }();
+
+        auto severity_str = [severity]() {
+            switch (severity) {
+                case GL_DEBUG_SEVERITY_NOTIFICATION: return "NOTIFICATION";
+                case GL_DEBUG_SEVERITY_LOW: return "LOW";
+                case GL_DEBUG_SEVERITY_MEDIUM: return "MEDIUM";
+                case GL_DEBUG_SEVERITY_HIGH: return "HIGH";
+                default: return "UNKNOWN";
+            }
+        }();
+
+        std::cout << source_str   << ", "
+                  << type_str     << ", "
+                  << severity_str << ", "
+                  << id           << ": "
+                  << message      << '\n';
     }
 
 }

@@ -62,7 +62,6 @@ namespace opengl
         light_shader_program_->uniformVec3f("u_spot_light.position", light_pos);
         light_shader_program_->uniform1f("u_spot_light.cutOff", glm::cos(glm::radians(12.5f)));
 
-
         light_shader_program_->uniform1i("u_material.diffuse", 0);
         light_shader_program_->uniform1i("u_material.specular", 1);
         light_shader_program_->uniform1f("u_material.shininess", 0.4f);
@@ -86,6 +85,7 @@ namespace opengl
                 glm::vec3( 1.5f,  0.2f, -1.5f),
                 glm::vec3(-1.3f,  1.0f, -1.5f)
         };
+
         for (auto&& cube_position : cubePositions)
         {
             model_matrix_ = glm::mat4(1.0f);

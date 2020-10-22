@@ -23,7 +23,7 @@ namespace opengl
         glm::mat4 projection_{1.0f};
 
     private:
-        void drawObject(const ShaderProgram &shader_program, const VertexArray &vertex_array, glm::vec3 light_pos, const Texture &texture, const Texture &specular_texture);
+        static void messageCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, GLchar const* message, void const* user_param);
     public:
         Application();
         ~Application();
