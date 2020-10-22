@@ -12,32 +12,24 @@ namespace opengl
 		view_ = glm::lookAt(position_, position_ + front_, up_);
 	}
 
-    void Camera::move(Direction direction)
+    void Camera::translate(Direction direction)
     {
         const float kCameraSpeed = 0.3f;
-        glm::vec3 pos;
         switch (direction)
         {
             case Direction::up:
-                pos = front_ * kCameraSpeed;
                 position_ += front_ * kCameraSpeed;
                 break;
             case Direction::down:
-                pos = front_ * kCameraSpeed;
                 position_ -= front_ * kCameraSpeed;
                 break;
             case Direction::right:
-                pos = glm::normalize(glm::cross(front_, up_)) * kCameraSpeed;
                 position_ += glm::normalize(glm::cross(front_, up_)) * kCameraSpeed;
                 break;
             case Direction::left:
-                pos = glm::normalize(glm::cross(front_, up_)) * kCameraSpeed;
                 position_ -= glm::normalize(glm::cross(front_, up_)) * kCameraSpeed;
                 break;
         }
-        std::cout << "Translate: "<< pos.x  << " " << pos.y << " " << pos.z << '\n';
-
-        std::cout << "Position: "<< position_.x  << " " << position_.y << " " << position_.z << '\n';
         view_ = glm::lookAt(position_, position_ + front_, up_);
     }
 

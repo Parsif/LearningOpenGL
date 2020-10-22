@@ -14,10 +14,11 @@ namespace opengl
 		
 	public:
 		Camera(const glm::vec3& position, const glm::vec3& front, const glm::vec3& up);
-		void move(Direction direction);
+		void translate(Direction direction);
 		void rotate(const glm::vec3 &target);
 		[[nodiscard]] inline const auto& getViewMatrix() const { return view_; }
         [[nodiscard]] inline const auto& getGetPosition() const { return position_; }
+        [[nodiscard]] inline const auto& getGetFront() const { return front_; }
     };
 }
 

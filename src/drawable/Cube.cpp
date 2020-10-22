@@ -24,7 +24,6 @@ namespace opengl
         glEnableVertexAttribArray(2);
         vertex_array_.unbind();
 
-
         const Shader light_vertex_shader("../src/shaders/lighting_vertex.glsl", GL_VERTEX_SHADER);
         const Shader light_fragment_shader("../src/shaders/lighting_fragment.glsl", GL_FRAGMENT_SHADER);
         light_shader_program_ = ShaderProgram({light_vertex_shader, light_fragment_shader});
@@ -58,9 +57,11 @@ namespace opengl
         light_shader_program_->uniformVec3f("u_spot_light.ambient", glm::vec3(0.2f));
         light_shader_program_->uniformVec3f("u_spot_light.diffuse", glm::vec3(0.5f));
         light_shader_program_->uniformVec3f("u_spot_light.specular", glm::vec3(1.0f));
-        light_shader_program_->uniformVec3f("u_spot_light.direction", glm::vec3(-0.2f, -1.0f, -0.3f));
-        light_shader_program_->uniformVec3f("u_spot_light.position", light_pos);
-        light_shader_program_->uniform1f("u_spot_light.cutOff", glm::cos(glm::radians(12.5f)));
+        light_shader_program_->uniformVec3f("u_spot_light.direction", camera->getGetFront());
+        light_shader_program_->uniformVec3f("u_spot_light.position", camera->getGetPosition());
+        light_shader_program_->uniform1f("u_spot_light.cut_off", glm::cos(glm::radians(12.5f)));
+        light_shader_program_->uniform1f("u_spot_light.outer_cut_off", glm::cos(glm::radians(17.0f)));
+
 
         light_shader_program_->uniform1i("u_material.diffuse", 0);
         light_shader_program_->uniform1i("u_material.specular", 1);

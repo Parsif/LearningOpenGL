@@ -9,16 +9,16 @@ namespace opengl
             switch (key)
             {
                 case GLFW_KEY_A:
-                    camera_->move(Direction::left);
+                    camera_->translate(Direction::left);
                     break;
                 case GLFW_KEY_S:
-                    camera_->move(Direction::down);
+                    camera_->translate(Direction::down);
                     break;
                 case GLFW_KEY_W:
-                    camera_->move(Direction::up);
+                    camera_->translate(Direction::up);
                     break;
                 case GLFW_KEY_D:
-                    camera_->move(Direction::right);
+                    camera_->translate(Direction::right);
                     break;
                 default: break;
             }
