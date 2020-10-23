@@ -70,8 +70,8 @@ namespace opengl
         light_shader_program_->uniformMatrix4fv("u_view", camera->getViewMatrix());
         light_shader_program_->uniformMatrix4fv("u_projection", projection_matrix);
 
-        container_texture_.Bind();
-        container_specular_texture.Bind(1);
+        container_texture_.bind();
+        container_specular_texture.bind(1);
 
         vertex_array_.bind();
         glm::vec3 cubePositions[] = {
@@ -98,8 +98,8 @@ namespace opengl
         }
         vertex_array_.unbind();
 
-        container_texture_.UnBind();
-        container_specular_texture.UnBind();
+        container_texture_.unBind();
+        container_specular_texture.unBind();
 
     }
 }

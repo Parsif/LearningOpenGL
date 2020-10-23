@@ -6,31 +6,31 @@
 #include "buffers/VertexBuffer.h"
 #include "buffers/IndexBuffer.h"
 #include "ShaderProgram.h"
+#include "Texture.h"
 
 #include <glm/glm.hpp>
 
 #include <string>
 #include <vector>
+#include <optional>
 
 namespace opengl
 {
     struct Vertex
     {
-        glm::vec3 position, normal, tex_coords;
+        glm::vec3 position, normal;
+        glm::vec2 tex_coords;
+        [[nodiscard]] static inline unsigned int getNormalOffset() {return 3 * sizeof(float);}
+        [[nodiscard]] static inline unsigned int getTexCoordOffset() {return getNormalOffset() + 3 * sizeof(float); }
     };
 
-    struct Texture
-    {
-        unsigned int id;
-        TextureType texture_type;
-    };
 
     class Mesh
     {
     private:
         VertexArray vertex_array_;
-        VertexBuffer vertex_buffer_;
-        IndexBuffer index_buffer_;
+        std::optional<VertexBuffer> vertex_buffer_;
+        std::optional<IndexBuffer> index_buffer_;
 
         std::vector<Vertex> vertices_;
         std::vector<unsigned int> indices_;
