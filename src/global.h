@@ -9,9 +9,14 @@ namespace opengl
         up, down, right, left
     };
 
+    enum class TextureType
+    {
+        diffuse, specular
+    };
+
     struct MousePos
     {
-        float x, y, pitch = 0.f, yaw = -90.0f;
+        float x{}, y{}, pitch = 0.f, yaw = -90.0f;
     };
 
 }
