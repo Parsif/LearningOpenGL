@@ -4,6 +4,7 @@
 #include "buffers/VertexBuffer.h"
 #include "drawable/Lamp.h"
 #include "drawable/Cube.h"
+#include "Model.h"
 
 
 #include <glm/gtc/matrix_transform.hpp>
@@ -111,16 +112,19 @@ namespace opengl
 
         Cube cube(vertex_buffer);
         Lamp lamp(vertex_buffer);
+        Model backpack("C:\\Users\\Владислав\\Downloads\\backpack\\backpack.obj");
 
-        while (!glfwWindowShouldClose(window))
+        while (!glfwWindowShouldClose(window)) const Shader backpack_vertex_shader("../src/shaders/backpack_vertex.glsl", GL_VERTEX_SHADER);
+        const Shader backpack_fragment_shader("../src/shaders/backpack_fragment.glsl", GL_FRAGMENT_SHADER);
+        ShaderProgram backpack_sp({backpack_vertex_shader, backpack_fragment_shader});
         {                                                                                       
             glfwPollEvents();
             glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-            cube.render(camera_, projection_, lamp.getPosition());
-            lamp.render(camera_->getViewMatrix(), projection_);
-
+          //  cube.render(camera_, projection_, lamp.getPosition());
+            //lamp.render(camera_->getViewMatrix(), projection_);
+            backpack.render(backpack_sp);
             glfwSwapBuffers(window);
         }
     }

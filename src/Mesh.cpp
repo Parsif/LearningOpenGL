@@ -33,11 +33,11 @@ namespace opengl
         {
             textures_[i].bind(i);
             std::string texture_number;
-            if(textures_[i].texture_type_ == TextureType::diffuse)
+            if(textures_[i].getTextureType() == TextureType::diffuse)
                 texture_number = std::to_string(diffuse_counter++);
-            else if(textures_[i].texture_type_ == TextureType::diffuse)
+            else if(textures_[i].getTextureType() == TextureType::diffuse)
                 texture_number = std::to_string(specular_counter++);
-            shader_program.uniform1i("material." + textures_[i].name_ + texture_number, i);
+            shader_program.uniform1i("material." + textures_[i].getTextureName() + texture_number, i);
         }
         vertex_array_.bind();
         glDrawElements(GL_TRIANGLES, indices_.size(), GL_UNSIGNED_INT, 0);

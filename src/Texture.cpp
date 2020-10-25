@@ -25,6 +25,11 @@ namespace opengl
         if(image_buffer_) stbi_image_free(image_buffer_);
     }
 
+    Texture::Texture(TextureType texture_type, const std::string &texture_path) : Texture(texture_path)
+    {
+        texture_type_ = texture_type;
+    }
+
     void Texture::bind(unsigned int slot) const
     {
         glActiveTexture(GL_TEXTURE0 + slot);
@@ -40,6 +45,8 @@ namespace opengl
     {
         glDeleteTextures(1, &id_);
     }
+
+
 
 
 }
