@@ -24,11 +24,18 @@ namespace opengl
         [[nodiscard]] static inline unsigned int getTexCoordOffset() {return getNormalOffset() + 3 * sizeof(float); }
     };
 
-    struct ModelTexture
+    class ModelTexture
     {
+    public:
         unsigned int id;
         std::string name;
         TextureType texture_type;
+    public:
+        void bind(unsigned int slot)
+        {
+            glActiveTexture(GL_TEXTURE0 + slot);
+            glBindTexture(GL_TEXTURE_2D, id);
+        };
     };
 
     class Mesh

@@ -52,7 +52,7 @@ namespace opengl
     {
         std::vector<Vertex> vertices;
         std::vector<unsigned int> indices;
-        std::vector<FileTexture> textures;
+        std::vector<ModelTexture> textures;
 
         for(unsigned int i = 0; i < mesh->mNumVertices; i++)
         {
@@ -95,10 +95,10 @@ namespace opengl
         std::vector<ModelTexture> textures;
         for (unsigned int i = 0; i < mat->GetTextureCount(type); ++i)
         {
-            aiString texture_path;
-            mat->GetTexture(type, i, &texture_path);
-            std::cout << "Output: " << texture_path.C_Str() << '\n';
-            textures.emplace_back(ModelTexture{loadTextureFromFile(texture_path.C_Str()), texture_path.C_Str(), texture_type});
+            aiString texture_name;
+            mat->GetTexture(type, i, &texture_name);
+            textures.emplace_back(ModelTexture{loadTextureFromFile(directory_ + '/' + texture_name.C_Str()),
+                                                texture_name.C_Str(), texture_type});
         }
         return textures;
     }
@@ -110,32 +110,29 @@ namespace opengl
 
         int width, height, nrComponents;
         unsigned char *data = stbi_load(path.c_str(), &width, &height, &nrComponents, 0);
-        if (data)
-        {
-            GLenum format;
-            if (nrComponents == 1)
-                format = GL_RED;
-            else if (nrComponents == 3)
-                format = GL_RGB;
-            else if (nrComponents == 4)
-                format = GL_RGBA;
-
-            glBindTexture(GL_TEXTURE_2D, texture_id);
-            glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
-            glGenerateMipmap(GL_TEXTURE_2D);
-
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-            stbi_image_free(data);
-        }
-        else
+        if (!data)
         {
             std::cout << "Texture failed to load at path: " << path << std::endl;
-            stbi_image_free(data);
         }
+
+        GLenum format;
+        if (nrComponents == 1)
+            format = GL_RED;
+        else if (nrComponents == 3)
+            format = GL_RGB;
+        else if (nrComponents == 4)
+            format = GL_RGBA;
+
+        glBindTexture(GL_TEXTURE_2D, texture_id);
+        glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+        stbi_image_free(data);
 
         return texture_id;
     }
