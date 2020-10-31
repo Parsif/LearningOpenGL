@@ -7,7 +7,7 @@
 #include "buffers/VertexArray.h"
 
 #include "global.h"
-#include "Texture.h"
+#include "FileTexture.h"
 
 #include <memory>
 

@@ -1,6 +1,9 @@
 #ifndef LEARNINGOPENGL_GLOBAL_H
 #define LEARNINGOPENGL_GLOBAL_H
 
+#include <iostream>
+#include "std_image.h"
+
 
 namespace opengl
 {
@@ -18,6 +21,8 @@ namespace opengl
     {
         float x{}, y{}, pitch = 0.f, yaw = -90.0f;
     };
+
+
 
 }
 
