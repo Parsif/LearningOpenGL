@@ -31,7 +31,6 @@ namespace opengl
 
     void Application::Run()
     {
-
         const auto window = glfwCreateWindow(800, 600, "LearnOpenGL", nullptr, nullptr);
         if (window == nullptr)
         {
@@ -62,6 +61,7 @@ namespace opengl
         EventHandler::init(window, camera_, mouse_pos_);
 
         Model backpack("../res/backpack/backpack.obj");
+        std::cout << "HELLO world'\n";
 
         const Shader backpack_vertex_shader("../src/shaders/backpack_vertex.glsl", GL_VERTEX_SHADER);
         const Shader backpack_fragment_shader("../src/shaders/backpack_fragment.glsl", GL_FRAGMENT_SHADER);

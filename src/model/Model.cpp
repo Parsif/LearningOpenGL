@@ -1,6 +1,4 @@
 #include "Model.h"
-
-
 #include <assimp/Importer.hpp>
 #include <iostream>
 

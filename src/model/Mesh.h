@@ -12,7 +12,7 @@
 
 #include <string>
 #include <vector>
-#include <optional>
+#include <memory>
 
 namespace opengl
 {
@@ -42,8 +42,8 @@ namespace opengl
     {
     private:
         VertexArray vertex_array_;
-        std::optional<VertexBuffer> vertex_buffer_;
-        std::optional<IndexBuffer> index_buffer_;
+        std::unique_ptr<VertexBuffer> vertex_buffer_;
+        std::unique_ptr<IndexBuffer> index_buffer_;
 
         std::vector<Vertex> vertices_;
         std::vector<unsigned int> indices_;

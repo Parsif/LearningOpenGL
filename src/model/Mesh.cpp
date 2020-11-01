@@ -6,9 +6,9 @@ namespace opengl
             vertices_(std::move(vertices)), indices_(std::move(indices)), textures_(std::move(textures))
     {
         vertex_array_.bind();
-        vertex_buffer_ = VertexBuffer(vertices.data(), vertices.size() * sizeof(decltype (vertices)::value_type));
-        index_buffer_ = IndexBuffer(indices.data(), indices.size() * sizeof(decltype (vertices)::value_type));
-
+        vertex_buffer_ = std::make_unique<VertexBuffer>(vertices.data(), vertices.size() * sizeof(decltype (vertices)::value_type));
+        index_buffer_ = std::make_unique<IndexBuffer>(indices.data(), indices.size() * sizeof(decltype (vertices)::value_type));
+        vertex_buffer_->bind();
         // vertex position
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), nullptr);

@@ -1,6 +1,7 @@
 #include "VertexBuffer.h"
 
 #include <GL/glew.h>
+#include <iostream>
 
 namespace opengl
 {

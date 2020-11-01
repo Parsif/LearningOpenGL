@@ -16,7 +16,7 @@ namespace opengl
         glLinkProgram(shader_program_id_);
 
         int success;
-        glGetProgramiv(shader_program_id_, GL_COMPILE_STATUS, &success);
+        glGetProgramiv(shader_program_id_, GL_LINK_STATUS, &success);
         if(!success)
         {
             char info_log[512];
