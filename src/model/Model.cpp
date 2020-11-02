@@ -29,7 +29,13 @@ namespace opengl
             return;
         }
         directory_ = path.substr(0, path.find_last_of('/'));
-        processNode(scene->mRootNode, scene);
+
+        for(unsigned int i = 0; i < scene->mNumMeshes; i++)
+        {
+            meshes_.push_back(processMesh(scene->mMeshes[i], scene));
+            std::cout << "Hello world" << '\n';
+        }
+       // processNode(scene->mRootNode, scene);
     }
 
     void Model::processNode(aiNode *node, const aiScene *scene)
@@ -40,6 +46,7 @@ namespace opengl
             meshes_.push_back(processMesh(mesh, scene));
         }
         // then do the same for each of its children
+
         for(unsigned int i = 0; i < node->mNumChildren; i++)
         {
             processNode(node->mChildren[i], scene);
