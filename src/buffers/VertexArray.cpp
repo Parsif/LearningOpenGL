@@ -2,6 +2,8 @@
 
 #include <GL/glew.h>
 
+#include <iostream>
+
 namespace opengl
 {
     VertexArray::VertexArray()
@@ -21,7 +23,7 @@ namespace opengl
 
     VertexArray::~VertexArray()
     {
-        glDeleteVertexArrays(1, &id_);
+       // glDeleteVertexArrays(1, &id_);
     }
 
 }

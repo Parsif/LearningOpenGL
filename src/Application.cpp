@@ -61,7 +61,6 @@ namespace opengl
         EventHandler::init(window, camera_, mouse_pos_);
 
         Model backpack("../res/backpack/backpack.obj");
-        std::cout << "HELLO world'\n";
 
         const Shader backpack_vertex_shader("../src/shaders/backpack_vertex.glsl", GL_VERTEX_SHADER);
         const Shader backpack_fragment_shader("../src/shaders/backpack_fragment.glsl", GL_FRAGMENT_SHADER);
@@ -69,8 +68,20 @@ namespace opengl
         while (!glfwWindowShouldClose(window))
         {                                                                                       
             glfwPollEvents();
-            glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+            glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+            backpack_sp.UseShaderProgram();
+
+            glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)window_width_ / (float)window_height_, 0.1f, 100.0f);
+            backpack_sp.uniformMatrix4fv("projection", projection);
+            backpack_sp.uniformMatrix4fv("view",  camera_->getViewMatrix());
+
+            // render the loaded model
+            glm::mat4 model(1.0f);
+            model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
+            model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
+            backpack_sp.uniformMatrix4fv("model", model);
 
             backpack.render(backpack_sp);
             glfwSwapBuffers(window);

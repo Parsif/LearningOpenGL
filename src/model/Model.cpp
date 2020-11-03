@@ -99,12 +99,12 @@ namespace opengl
             aiString texture_name;
             mat->GetTexture(type, i, &texture_name);
             const auto texture_iter = std::find_if (loaded_textures_.begin(), loaded_textures_.end(), [texture_name](const ModelTexture& texture){
-                return texture.getName() == texture_name.C_Str();
+                return texture.getFilePath() == texture_name.C_Str();
             });
             if(texture_iter == loaded_textures_.end())
             {
-                auto texture = ModelTexture{loadTextureFromFile(directory_ + '/' + texture_name.C_Str()),
-                                            texture_name.C_Str(), texture_type};
+                auto texture = ModelTexture(loadTextureFromFile(directory_ + '/' + texture_name.C_Str()),
+                                            texture_name.C_Str(), texture_type);
                 loaded_textures_.emplace_back(texture);
                 textures.emplace_back(texture);
             }

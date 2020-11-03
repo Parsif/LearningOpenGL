@@ -11,6 +11,7 @@
 #include <glm/glm.hpp>
 
 #include <string>
+#include <utility>
 #include <vector>
 #include <memory>
 
@@ -20,23 +21,38 @@ namespace opengl
     {
         glm::vec3 position, normal;
         glm::vec2 tex_coords;
-        [[nodiscard]] static inline unsigned int getNormalOffset() {return 3 * sizeof(float);}
-        [[nodiscard]] static inline unsigned int getTexCoordOffset() {return getNormalOffset() + 3 * sizeof(float); }
     };
 
     class ModelTexture
     {
+    private:
+        unsigned int id_;
+        std::string file_path_;
+        std::string string_type_;
+        TextureType texture_type_;
+
     public:
-        unsigned int id;
-        std::string name_;
-        TextureType texture_type;
-    public:
+        ModelTexture(unsigned int id, std::string file_path, TextureType texture_type) : id_(id), file_path_(std::move(file_path)), texture_type_(texture_type)
+        {
+            switch (texture_type_)
+            {
+                case TextureType::diffuse:
+                    string_type_ = "diffuse";
+                    break;
+                case TextureType::specular:
+                    string_type_ = "specular";
+                    break;
+            }
+        }
+
         void bind(unsigned int slot)
         {
             glActiveTexture(GL_TEXTURE0 + slot);
-            glBindTexture(GL_TEXTURE_2D, id);
+            glBindTexture(GL_TEXTURE_2D, id_);
         };
-        [[nodiscard]] inline auto getName() const { return name_;}
+        [[nodiscard]] inline auto getFilePath() const { return file_path_; }
+        [[nodiscard]] inline auto getTextureType() const { return texture_type_; }
+        [[nodiscard]] inline auto getStringType() const { return string_type_; }
     };
 
     class Mesh
