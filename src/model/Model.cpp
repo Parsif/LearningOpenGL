@@ -30,12 +30,7 @@ namespace opengl
         }
         directory_ = path.substr(0, path.find_last_of('/'));
 
-        for(unsigned int i = 0; i < scene->mNumMeshes; i++)
-        {
-            meshes_.push_back(processMesh(scene->mMeshes[i], scene));
-            std::cout << "Hello world" << '\n';
-        }
-       // processNode(scene->mRootNode, scene);
+        processNode(scene->mRootNode, scene);
     }
 
     void Model::processNode(aiNode *node, const aiScene *scene)
@@ -66,7 +61,7 @@ namespace opengl
             glm::vec2 tex_coord;
             if(mesh->mTextureCoords[0])
             {
-                tex_coord = glm::vec2(mesh->mVertices[i].x, mesh->mVertices[i].y);
+                tex_coord = glm::vec2(mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y);
             }
             else
             {
@@ -77,9 +72,10 @@ namespace opengl
 
         for (unsigned int i = 0; i < mesh->mNumFaces; ++i)
         {
-            for (unsigned int j = 0; j < mesh->mFaces[i].mNumIndices; ++j)
+            aiFace face = mesh->mFaces[i];
+            for (unsigned int j = 0; j < face.mNumIndices; ++j)
             {
-                indices.push_back(mesh->mFaces[i].mIndices[j]);
+                indices.push_back(face.mIndices[j]);
             }
         }
 
@@ -102,8 +98,20 @@ namespace opengl
         {
             aiString texture_name;
             mat->GetTexture(type, i, &texture_name);
-            textures.emplace_back(ModelTexture{loadTextureFromFile(directory_ + '/' + texture_name.C_Str()),
-                                                texture_name.C_Str(), texture_type});
+            const auto texture_iter = std::find_if (loaded_textures_.begin(), loaded_textures_.end(), [texture_name](const ModelTexture& texture){
+                return texture.getName() == texture_name.C_Str();
+            });
+            if(texture_iter == loaded_textures_.end())
+            {
+                auto texture = ModelTexture{loadTextureFromFile(directory_ + '/' + texture_name.C_Str()),
+                                            texture_name.C_Str(), texture_type};
+                loaded_textures_.emplace_back(texture);
+                textures.emplace_back(texture);
+            }
+            else
+            {
+                textures.emplace_back(*texture_iter);
+            }
         }
         return textures;
     }

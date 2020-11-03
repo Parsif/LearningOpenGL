@@ -28,7 +28,7 @@ namespace opengl
     {
     public:
         unsigned int id;
-        std::string name;
+        std::string name_;
         TextureType texture_type;
     public:
         void bind(unsigned int slot)
@@ -36,6 +36,7 @@ namespace opengl
             glActiveTexture(GL_TEXTURE0 + slot);
             glBindTexture(GL_TEXTURE_2D, id);
         };
+        [[nodiscard]] inline auto getName() const { return name_;}
     };
 
     class Mesh

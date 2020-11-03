@@ -16,6 +16,7 @@ namespace opengl
     {
     private:
         std::vector<Mesh> meshes_;
+        std::vector<ModelTexture> loaded_textures_;
         std::string directory_;
     private:
         void loadModel(const std::string &path);

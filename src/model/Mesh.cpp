@@ -35,7 +35,7 @@ namespace opengl
                 texture_number = std::to_string(diffuse_counter++);
             else if(textures_[i].texture_type == TextureType::diffuse)
                 texture_number = std::to_string(specular_counter++);
-            shader_program.uniform1i("u_material." + textures_[i].name + texture_number, i);
+            shader_program.uniform1i("u_material." + textures_[i].getName() + texture_number, i);
         }
         shader_program.UseShaderProgram();
         vertex_array_.bind();
