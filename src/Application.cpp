@@ -2,15 +2,15 @@
 
 #include "EventHandler.h"
 #include "buffers/VertexBuffer.h"
-#include "drawable/Lamp.h"
-#include "drawable/Cube.h"
 #include "model/Model.h"
-
-
-#include <glm/gtc/matrix_transform.hpp>
 
 #include <iostream>
 
+#include <glm/gtc/matrix_transform.hpp>
+#include "Renderer.h"
+
+#include "imgui/imgui_impl_opengl3.h"
+#include "imgui/imgui_impl_glfw.h"
 
 namespace opengl
 {
@@ -26,12 +26,15 @@ namespace opengl
 
     Application::~Application()
     {
+        ImGui_ImplOpenGL3_Shutdown();
+        ImGui_ImplGlfw_Shutdown();
+        ImGui::DestroyContext();
         glfwTerminate();
     }
 
     void Application::Run()
     {
-        const auto window = glfwCreateWindow(800, 600, "LearnOpenGL", nullptr, nullptr);
+        const auto window = glfwCreateWindow(1200, 700, "LearnOpenGL", nullptr, nullptr);
         if (window == nullptr)
         {
             std::cout << "GLFW Window creation failed\n";
@@ -45,6 +48,8 @@ namespace opengl
             std::cout << "GLEW init failed\n";
             return;
         }
+
+        Renderer::init(window);
 
         glEnable(GL_DEBUG_OUTPUT);
         glDebugMessageCallback(messageCallback, nullptr);
@@ -60,11 +65,11 @@ namespace opengl
 
         EventHandler::init(window, camera_, mouse_pos_);
 
-        Model backpack("../res/backpack/backpack.obj");
-
         const Shader backpack_vertex_shader("../src/shaders/backpack_vertex.glsl", GL_VERTEX_SHADER);
         const Shader backpack_fragment_shader("../src/shaders/backpack_fragment.glsl", GL_FRAGMENT_SHADER);
         ShaderProgram backpack_sp({backpack_vertex_shader, backpack_fragment_shader});
+        Scene scene;
+        Model backpack("../res/backpack/backpack.obj");
         while (!glfwWindowShouldClose(window))
         {                                                                                       
             glfwPollEvents();
@@ -72,7 +77,6 @@ namespace opengl
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
             backpack_sp.UseShaderProgram();
-
             glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)window_width_ / (float)window_height_, 0.1f, 100.0f);
             backpack_sp.uniformMatrix4fv("projection", projection);
             backpack_sp.uniformMatrix4fv("view",  camera_->getViewMatrix());
@@ -84,6 +88,9 @@ namespace opengl
             backpack_sp.uniformMatrix4fv("model", model);
 
             backpack.render(backpack_sp);
+
+            Renderer::render(scene);
+
             glfwSwapBuffers(window);
         }
     }
