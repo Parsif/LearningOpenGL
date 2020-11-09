@@ -6,11 +6,11 @@
 
 namespace opengl
 {
-	Camera::Camera(const glm::vec3& position, const glm::vec3& front, const glm::vec3& up) :
-            position_(position), front_(front), up_(up)
+	Camera::Camera(const glm::vec3& position, const glm::vec3& front, const glm::vec3& up, const glm::mat4 &projection) :
+            position_(position), front_(front), up_(up), projection_(projection)
 	{
 		view_ = glm::lookAt(position_, position_ + front_, up_);
-	}
+    }
 
     void Camera::translate(Direction direction)
     {

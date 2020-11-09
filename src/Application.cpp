@@ -1,16 +1,12 @@
 #include "Application.h"
 
 #include "EventHandler.h"
-#include "buffers/VertexBuffer.h"
-#include "drawable/Lamp.h"
-#include "drawable/Cube.h"
+#include "buffers/Buffer.h"
 #include "model/Model.h"
-
 
 #include <glm/gtc/matrix_transform.hpp>
 
 #include <iostream>
-
 
 namespace opengl
 {
@@ -31,15 +27,7 @@ namespace opengl
 
     void Application::Run()
     {
-        const auto window = glfwCreateWindow(800, 600, "LearnOpenGL", nullptr, nullptr);
-        if (window == nullptr)
-        {
-            std::cout << "GLFW Window creation failed\n";
-            glfwTerminate();
-            return;
-        }
-
-        glfwMakeContextCurrent(window);
+        window_ = Window(1200, 800, "LearnOpenGL");
         if(glewInit() != GLEW_OK)
         {
             std::cout << "GLEW init failed\n";
@@ -50,33 +38,35 @@ namespace opengl
         glDebugMessageCallback(messageCallback, nullptr);
         glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
 
-        glfwGetFramebufferSize(window, &window_width_, &window_height_);
-        glViewport(0, 0, window_width_, window_height_);
-        mouse_pos_.x = window_width_ / 2;
-        mouse_pos_.y = window_height_ / 2;
-        projection_ = glm::perspective(glm::radians(45.f), static_cast<float>(window_width_) / window_height_, 0.1f, 100.f);
+        mouse_pos_.x = window_.getWidth() / 2;
+        mouse_pos_.y = window_.getHeight() / 2;
         glEnable(GL_DEPTH_TEST);
-        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-        EventHandler::init(window, camera_, mouse_pos_);
+        glm::mat4 projection{1.0f};
+        projection = glm::perspective(glm::radians(45.0f),
+                                      static_cast<float>(window_.getWidth()) / window_.getHeight(),
+                                      0.1f, 100.f);
+
+        const auto camera = std::make_shared<Camera>(glm::vec3(0.f, 0.f, 3.f),
+                            glm::vec3(0.f, 0.f, 0.f),
+                              glm::vec3(0.f, 1.f, 0.f), projection);
+        EventHandler::init(window_.getWindow(), camera, mouse_pos_);
+
 
         Model backpack("../res/backpack/backpack.obj");
 
         const Shader backpack_vertex_shader("../src/shaders/backpack_vertex.glsl", GL_VERTEX_SHADER);
         const Shader backpack_fragment_shader("../src/shaders/backpack_fragment.glsl", GL_FRAGMENT_SHADER);
         ShaderProgram backpack_sp({backpack_vertex_shader, backpack_fragment_shader});
-        while (!glfwWindowShouldClose(window))
+        while (!glfwWindowShouldClose(window_.getWindow()))
         {                                                                                       
             glfwPollEvents();
             glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
             backpack_sp.UseShaderProgram();
-
-            glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)window_width_ / (float)window_height_, 0.1f, 100.0f);
-            backpack_sp.uniformMatrix4fv("projection", projection);
-            backpack_sp.uniformMatrix4fv("view",  camera_->getViewMatrix());
-
+            backpack_sp.uniformMatrix4fv("projection", camera->getProjectionMatrix());
+            backpack_sp.uniformMatrix4fv("view",  camera->getViewMatrix());
             // render the loaded model
             glm::mat4 model(1.0f);
             model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
@@ -84,7 +74,7 @@ namespace opengl
             backpack_sp.uniformMatrix4fv("model", model);
 
             backpack.render(backpack_sp);
-            glfwSwapBuffers(window);
+            glfwSwapBuffers(window_.getWindow());
         }
     }
 

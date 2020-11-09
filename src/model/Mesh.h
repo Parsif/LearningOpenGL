@@ -3,8 +3,7 @@
 
 #include "global.h"
 #include "buffers/VertexArray.h"
-#include "buffers/VertexBuffer.h"
-#include "buffers/IndexBuffer.h"
+#include "buffers/Buffer.h"
 #include "ShaderProgram.h"
 #include "FileTexture.h"
 

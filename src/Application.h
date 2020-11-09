@@ -8,8 +8,7 @@
 
 #include "global.h"
 #include "FileTexture.h"
-
-#include <memory>
+#include "Window.h"
 
 namespace opengl
 {
@@ -17,10 +16,8 @@ namespace opengl
     {
     private:
         MousePos mouse_pos_;
-        int window_width_, window_height_;
-        std::shared_ptr<Camera> camera_ = std::make_shared<Camera>(glm::vec3(0.f, 0.f, 3.f),
-                                   glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
-        glm::mat4 projection_{1.0f};
+        Window window_;
+
 
     private:
         static void messageCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, GLchar const* message, void const* user_param);
