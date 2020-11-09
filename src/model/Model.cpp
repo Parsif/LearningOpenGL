@@ -120,7 +120,6 @@ namespace opengl
     {
         unsigned int texture_id;
         glGenTextures(1, &texture_id);
-
         int width, height, nrComponents;
         stbi_set_flip_vertically_on_load(true);
         unsigned char *data = stbi_load(path.c_str(), &width, &height, &nrComponents, 0);
