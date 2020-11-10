@@ -1,18 +1,18 @@
 #include "EngineRenderer.h"
 
+#include <utility>
+
 
 namespace opengl
 {
-    EngineRenderer::EngineRenderer(std::vector<Scene> scenes) : m_scenes(std::move(scenes))
+    EngineRenderer::EngineRenderer(Scene scene) : m_active_scene(std::move(scene))
     {
 
     }
 
     void EngineRenderer::render()
     {
-        for(auto&& scene : m_scenes) {
-            scene.render();
-        }
+       m_active_scene.render();
     }
 }
 

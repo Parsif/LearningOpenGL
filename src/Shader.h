@@ -1,7 +1,6 @@
-#ifndef LEARNINGOPENGL_SHADER_H
-#define LEARNINGOPENGL_SHADER_H
+#pragma once
 
-#include <string>
+#include "pch.h"
 
 
 namespace opengl
@@ -17,6 +16,3 @@ namespace opengl
     };
 }
 
-
-
-#endif //LEARNINGOPENGL_SHADER_H

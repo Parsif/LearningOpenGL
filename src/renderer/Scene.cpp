@@ -1,11 +1,12 @@
 #include "Scene.h"
 
-#include <glm/gtc/matrix_transform.hpp>
+#include <utility>
+
 
 namespace opengl
 {
 
-    Scene::Scene(std::initializer_list<Entity> entities, const Window& window) : m_entities(entities)
+    Scene::Scene(std::vector<Entity>  entities, const Window& window) : m_entities(std::move(entities))
     {
         glm::mat4 projection{1.0f};
         projection = glm::perspective(glm::radians(45.0f),
@@ -14,7 +15,7 @@ namespace opengl
 
         m_camera = Camera(glm::vec3(0.f, 0.f, 3.f),
                           glm::vec3(0.f, 0.f, 0.f),
-                          glm::vec3(0.f, 1.f, 0.f), projection)
+                          glm::vec3(0.f, 1.f, 0.f), projection);
     }
 
     void Scene::addEntity(Entity entity)

@@ -1,5 +1,4 @@
-#ifndef LEARNINGOPENGL_MODEL_H
-#define LEARNINGOPENGL_MODEL_H
+#pragma once
 
 #include "FileTexture.h"
 #include "ShaderProgram.h"
@@ -30,6 +29,3 @@ namespace opengl
         [[nodiscard]] static unsigned int loadTextureFromFile(const std::string &path);
     };
 }
-
-
-#endif //LEARNINGOPENGL_MODEL_H

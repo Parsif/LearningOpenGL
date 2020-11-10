@@ -1,21 +1,19 @@
-#ifndef LEARNINGOPENGL_VERTEXARRAY_H
-#define LEARNINGOPENGL_VERTEXARRAY_H
+#pragma once
 
 namespace opengl
 {
     class VertexArray
     {
-    private:
-        unsigned int id_;
     public:
         VertexArray();
         ~VertexArray();
         void bind() const;
         void unbind() const;
+
+    private:
+        unsigned int id_;
     };
 
 }
 
 
-
-#endif //LEARNINGOPENGL_VERTEXARRAY_H

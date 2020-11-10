@@ -1,10 +1,7 @@
-#ifndef LEARNINGOPENGL_EVENTHANDLER_H
-#define LEARNINGOPENGL_EVENTHANDLER_H
+#pragma once
 
-#include <GLFW/glfw3.h>
+#include "pch.h"
 #include "Camera.h"
-
-#include <memory>
 
 namespace opengl
 {
@@ -22,6 +19,3 @@ namespace opengl
     };
 }
 
-
-
-#endif //LEARNINGOPENGL_EVENTHANDLER_H

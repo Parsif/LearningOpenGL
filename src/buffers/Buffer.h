@@ -1,16 +1,12 @@
-#ifndef LEARNINGOPENGL_BUFFER_H
-#define LEARNINGOPENGL_BUFFER_H
+#pragma once
 
-#include <initializer_list>
-#include <vector>
-#include <cstdint>
+#include "pch.h"
 
 namespace opengl
 {
     //////////////////////////////////////////////////
     //VertexBuffer////////////////////////////////////
     //////////////////////////////////////////////////
-
     class VertexBuffer
     {
     private:
@@ -26,7 +22,6 @@ namespace opengl
     //////////////////////////////////////////////////
     //IndexBuffer/////////////////////////////////////
     //////////////////////////////////////////////////
-
     class IndexBuffer
     {
     private:
@@ -44,7 +39,6 @@ namespace opengl
     //////////////////////////////////////////////////
     //BufferLayout/////////////////////////////////////
     //////////////////////////////////////////////////
-
     enum class ShaderDataType
     {
         None = 0, Float, Float2, Float3, Float4, Mat3, Mat4, Int, Int2, Int3, Int4, Bool
@@ -132,6 +126,3 @@ namespace opengl
 
 }
 
-
-
-#endif //LEARNINGOPENGL_BUFFER_H

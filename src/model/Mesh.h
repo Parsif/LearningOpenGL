@@ -1,5 +1,6 @@
-#ifndef LEARNINGOPENGL_MESH_H
-#define LEARNINGOPENGL_MESH_H
+#pragma once
+
+#include "pch.h"
 
 #include "global.h"
 #include "buffers/VertexArray.h"
@@ -7,12 +8,6 @@
 #include "ShaderProgram.h"
 #include "FileTexture.h"
 
-#include <glm/glm.hpp>
-
-#include <string>
-#include <utility>
-#include <vector>
-#include <memory>
 
 namespace opengl
 {
@@ -71,5 +66,3 @@ namespace opengl
     };
 }
 
-
-#endif //LEARNINGOPENGL_MESH_H

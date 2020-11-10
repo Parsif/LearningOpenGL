@@ -1,14 +1,9 @@
-#ifndef LEARNINGOPENGL_ENTITY_H
-#define LEARNINGOPENGL_ENTITY_H
+#pragma once
 
-#include <optional>
-#include <string>
-
-#include <glm/glm.hpp>
+#include "pch.h"
 
 #include "model/Model.h"
 #include "Camera.h"
-
 
 namespace opengl
 {
@@ -16,6 +11,7 @@ namespace opengl
     {
     public:
         Entity(const std::string& model_filepath, const ShaderProgram& shader_program);
+
         void render(const Camera& camera);
 
     private:
@@ -27,5 +23,3 @@ namespace opengl
 }
 
 
-
-#endif //LEARNINGOPENGL_ENTITY_H

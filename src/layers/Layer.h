@@ -1,5 +1,4 @@
-#ifndef LEARNINGOPENGL_LAYER_H
-#define LEARNINGOPENGL_LAYER_H
+#pragma once
 
 namespace opengl
 {
@@ -12,5 +11,3 @@ namespace opengl
         virtual ~Layer() = default;
     };
 }
-
-#endif //LEARNINGOPENGL_LAYER_H

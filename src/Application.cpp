@@ -58,10 +58,10 @@ namespace opengl
         const Shader backpack_vertex_shader("../src/shaders/backpack_vertex.glsl", GL_VERTEX_SHADER);
         const Shader backpack_fragment_shader("../src/shaders/backpack_fragment.glsl", GL_FRAGMENT_SHADER);
         ShaderProgram backpack_sp({backpack_vertex_shader, backpack_fragment_shader});
-        EngineRenderer engine_renderer({
-            Scene(
-                {Entity("../res/backpack/backpack.obj", backpack_sp)}, m_window)
-        });
+        std::vector<Entity> entities;
+        entities.emplace_back("../res/backpack/backpack.obj", backpack_sp);
+        Scene scene(std::move(entities), m_window);
+        EngineRenderer engine_renderer(scene);
 
 
 

@@ -1,7 +1,5 @@
-#ifndef LEARNINGOPENGL_APPLICATION_H
-#define LEARNINGOPENGL_APPLICATION_H
-
-#include <GL/glew.h>
+#pragma once
+#include "pch.h"
 
 #include "Shader.h"
 #include "Camera.h"
@@ -34,5 +32,3 @@ namespace opengl
     };
 }
 
-
-#endif //LEARNINGOPENGL_APPLICATION_H

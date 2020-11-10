@@ -1,7 +1,7 @@
-#ifndef LEARNINGOPENGL_LIGHT_H
-#define LEARNINGOPENGL_LIGHT_H
+#pragma once
 
-#include <glm/glm.hpp>
+#include "pch.h"
+
 namespace opengl
 {
     struct Light
@@ -26,5 +26,3 @@ namespace opengl
         float constant, linear, quadratic, cutoff;
     };
 }
-
-#endif //LEARNINGOPENGL_LIGHT_H

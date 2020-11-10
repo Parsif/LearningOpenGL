@@ -1,24 +1,18 @@
-#ifndef LEARNINGOPENGL_ENGINERENDERER_H
-#define LEARNINGOPENGL_ENGINERENDERER_H
+#pragma once
 
 #include "Scene.h"
-
-#include <vector>
 
 namespace opengl
 {
     class EngineRenderer
     {
     public:
-        EngineRenderer(std::vector<Scene> scenes);
+        EngineRenderer(Scene scene);
 
         void render();
     private:
-        std::vector<Scene> m_scenes
+        Scene m_active_scene;
     };
 }
 
 
-
-
-#endif //LEARNINGOPENGL_ENGINERENDERER_H

@@ -1,9 +1,7 @@
-#ifndef LEARNINGOPENGL_FILETEXTURE_H
-#define LEARNINGOPENGL_FILETEXTURE_H
+#pragma once
 
+#include "pch.h"
 #include "global.h"
-
-#include <string>
 
 namespace opengl
 {
@@ -24,5 +22,3 @@ namespace opengl
     };
 }
 
-
-#endif //LEARNINGOPENGL_FILETEXTURE_H

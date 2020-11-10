@@ -1,21 +1,13 @@
-#ifndef LEARNINGOPENGL_SHADERPROGRAM_H
-#define LEARNINGOPENGL_SHADERPROGRAM_H
+#pragma once
 
-#include <GL/glew.h>
+#include "pch.h"
 #include "Shader.h"
-
-#include <vector>
-#include <string>
-
-#include <glm/glm.hpp>
-
 
 namespace opengl
 {
     class ShaderProgram
     {
-    private:
-        int shader_program_id_;
+
     public:
         explicit ShaderProgram(const std::vector<Shader> &shaders);
         [[nodiscard]] inline auto GetId() const { return shader_program_id_; };
@@ -25,8 +17,8 @@ namespace opengl
         void uniform4f(const std::string &uniform_name, float value1, float value2, float value3, float value4) const;
         void uniformMatrix4fv(const std::string &uniform_name, const glm::mat4 &matrix) const;
         void uniformVec3f(const std::string &uniform_name, const glm::vec3 &vec) const;
+    private:
+        int shader_program_id_;
     };
 }
 
-
-#endif //LEARNINGOPENGL_SHADERPROGRAM_H

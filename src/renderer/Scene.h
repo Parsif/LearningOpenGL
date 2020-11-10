@@ -1,8 +1,6 @@
-#ifndef LEARNINGOPENGL_SCENE_H
-#define LEARNINGOPENGL_SCENE_H
+#pragma once
 
-#include <vector>
-#include <optional>
+#include "pch.h"
 
 #include "Window.h"
 #include "Camera.h"
@@ -14,7 +12,7 @@ namespace opengl
     class Scene
     {
     public:
-        Scene(std::initializer_list<Entity> entities, const Window& window);
+        Scene(std::vector<Entity> entities, const Window& window);
 
         void render();
         void addEntity(Entity entity);
@@ -26,6 +24,3 @@ namespace opengl
     };
 }
 
-
-
-#endif //LEARNINGOPENGL_SCENE_H
