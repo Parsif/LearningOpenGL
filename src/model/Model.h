@@ -14,19 +14,20 @@ namespace opengl
 {
     class Model
     {
+    public:
+        Model(const std::string &path);
+        void render(const ShaderProgram &shader_program);
+
     private:
-        std::vector<Mesh> meshes_;
-        std::vector<ModelTexture> loaded_textures_;
-        std::string directory_;
+        std::vector<Mesh> m_meshes;
+        std::vector<ModelTexture> m_loaded_textures;
+        std::string m_directory;
     private:
         void loadModel(const std::string &path);
         void processNode(aiNode *node, const aiScene *scene);
         Mesh processMesh(aiMesh *mesh, const aiScene *scene);
         [[nodiscard]] std::vector<ModelTexture> loadMaterialTextures(aiMaterial *mat, aiTextureType type, TextureType texture_type);
         [[nodiscard]] static unsigned int loadTextureFromFile(const std::string &path);
-    public:
-        explicit Model(const std::string &path);
-        void render(const ShaderProgram &shader_program);
     };
 }
 

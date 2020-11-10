@@ -1,9 +1,10 @@
 #ifndef LEARNINGOPENGL_WINDOW_H
 #define LEARNINGOPENGL_WINDOW_H
 
+#include <GLFW/glfw3.h>
+
 #include <string>
 
-#include <GLFW/glfw3.h>
 
 namespace opengl
 {

@@ -12,7 +12,7 @@ namespace opengl
 
     void Model::render(const ShaderProgram &shader_program)
     {
-        for(auto&& mesh : meshes_)
+        for(auto&& mesh : m_meshes)
         {
             mesh.render(shader_program);
         }
@@ -28,7 +28,7 @@ namespace opengl
             std::cout << "ERROR::ASSIMP::" << importer.GetErrorString() << '\n';
             return;
         }
-        directory_ = path.substr(0, path.find_last_of('/'));
+        m_directory = path.substr(0, path.find_last_of('/'));
 
         processNode(scene->mRootNode, scene);
     }
@@ -38,7 +38,7 @@ namespace opengl
         for(unsigned int i = 0; i < node->mNumMeshes; i++)
         {
             aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
-            meshes_.push_back(processMesh(mesh, scene));
+            m_meshes.push_back(processMesh(mesh, scene));
         }
         // then do the same for each of its children
 
@@ -98,14 +98,14 @@ namespace opengl
         {
             aiString texture_name;
             mat->GetTexture(type, i, &texture_name);
-            const auto texture_iter = std::find_if (loaded_textures_.begin(), loaded_textures_.end(), [texture_name](const ModelTexture& texture){
+            const auto texture_iter = std::find_if (m_loaded_textures.begin(), m_loaded_textures.end(), [texture_name](const ModelTexture& texture){
                 return texture.getFilePath() == texture_name.C_Str();
             });
-            if(texture_iter == loaded_textures_.end())
+            if(texture_iter == m_loaded_textures.end())
             {
-                auto texture = ModelTexture(loadTextureFromFile(directory_ + '/' + texture_name.C_Str()),
+                auto texture = ModelTexture(loadTextureFromFile(m_directory + '/' + texture_name.C_Str()),
                                             texture_name.C_Str(), texture_type);
-                loaded_textures_.emplace_back(texture);
+                m_loaded_textures.emplace_back(texture);
                 textures.emplace_back(texture);
             }
             else

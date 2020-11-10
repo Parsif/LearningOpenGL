@@ -3,6 +3,7 @@
 #include "EventHandler.h"
 #include "buffers/Buffer.h"
 #include "model/Model.h"
+#include "renderer/EngineRenderer.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -27,7 +28,7 @@ namespace opengl
 
     void Application::Run()
     {
-        window_ = Window(1200, 800, "LearnOpenGL");
+        m_window = Window(1200, 800, "LearnOpenGL");
         if(glewInit() != GLEW_OK)
         {
             std::cout << "GLEW init failed\n";
@@ -38,43 +39,40 @@ namespace opengl
         glDebugMessageCallback(messageCallback, nullptr);
         glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
 
-        mouse_pos_.x = window_.getWidth() / 2;
-        mouse_pos_.y = window_.getHeight() / 2;
+        mouse_pos_.x = m_window.getWidth() / 2;
+        mouse_pos_.y = m_window.getHeight() / 2;
         glEnable(GL_DEPTH_TEST);
 
         glm::mat4 projection{1.0f};
         projection = glm::perspective(glm::radians(45.0f),
-                                      static_cast<float>(window_.getWidth()) / window_.getHeight(),
+                                      static_cast<float>(m_window.getWidth()) / m_window.getHeight(),
                                       0.1f, 100.f);
 
         const auto camera = std::make_shared<Camera>(glm::vec3(0.f, 0.f, 3.f),
                             glm::vec3(0.f, 0.f, 0.f),
                               glm::vec3(0.f, 1.f, 0.f), projection);
-        EventHandler::init(window_.getWindow(), camera, mouse_pos_);
+        EventHandler::init(m_window.getWindow(), camera, mouse_pos_);
 
-
-        Model backpack("../res/backpack/backpack.obj");
+       // Model backpack("../res/backpack/backpack.obj");
 
         const Shader backpack_vertex_shader("../src/shaders/backpack_vertex.glsl", GL_VERTEX_SHADER);
         const Shader backpack_fragment_shader("../src/shaders/backpack_fragment.glsl", GL_FRAGMENT_SHADER);
         ShaderProgram backpack_sp({backpack_vertex_shader, backpack_fragment_shader});
-        while (!glfwWindowShouldClose(window_.getWindow()))
+        EngineRenderer engine_renderer({
+            Scene(
+                {Entity("../res/backpack/backpack.obj", backpack_sp)}, m_window)
+        });
+
+
+
+        while (!glfwWindowShouldClose(m_window.getWindow()))
         {                                                                                       
             glfwPollEvents();
             glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-            backpack_sp.UseShaderProgram();
-            backpack_sp.uniformMatrix4fv("projection", camera->getProjectionMatrix());
-            backpack_sp.uniformMatrix4fv("view",  camera->getViewMatrix());
-            // render the loaded model
-            glm::mat4 model(1.0f);
-            model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
-            model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
-            backpack_sp.uniformMatrix4fv("model", model);
-
-            backpack.render(backpack_sp);
-            glfwSwapBuffers(window_.getWindow());
+            engine_renderer.render();
+            glfwSwapBuffers(m_window.getWindow());
         }
     }
 

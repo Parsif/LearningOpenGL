@@ -1,12 +1,12 @@
 #ifndef LEARNINGOPENGL_SHADERPROGRAM_H
 #define LEARNINGOPENGL_SHADERPROGRAM_H
 
+#include <GL/glew.h>
 #include "Shader.h"
 
 #include <vector>
 #include <string>
 
-#include <GL/glew.h>
 #include <glm/glm.hpp>
 
 
