@@ -9,7 +9,7 @@ namespace opengl
 
     void Entity::render(const Camera& camera)
     {
-        m_shader_program.UseShaderProgram();
+        m_shader_program.useShaderProgram();
         m_shader_program.uniformMatrix4fv("model",  m_model_matrix);
         m_shader_program.uniformMatrix4fv("view",  camera.getViewMatrix());
         m_shader_program.uniformMatrix4fv("projection", camera.getProjectionMatrix());

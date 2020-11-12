@@ -30,7 +30,7 @@ namespace opengl
         }
     }
 
-    void ShaderProgram::UseShaderProgram() const
+    void ShaderProgram::useShaderProgram() const
     {
         glUseProgram(shader_program_id_);
     }

@@ -10,8 +10,8 @@ namespace opengl
 
     public:
         explicit ShaderProgram(const std::vector<Shader> &shaders);
-        [[nodiscard]] inline auto GetId() const { return shader_program_id_; };
-        void UseShaderProgram() const;
+        [[nodiscard]] inline auto getId() const { return shader_program_id_; };
+        void useShaderProgram() const;
         void uniform1i(const std::string &uniform_name, int value1) const;
         void uniform1f(const std::string &uniform_name, float value1) const;
         void uniform4f(const std::string &uniform_name, float value1, float value2, float value3, float value4) const;

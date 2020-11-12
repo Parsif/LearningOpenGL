@@ -13,7 +13,7 @@ namespace opengl
                                       static_cast<float>(window.getWidth()) / window.getHeight(),
                                       0.1f, 100.f);
 
-        m_camera = Camera(glm::vec3(0.f, 0.f, 3.f),
+        m_camera = std::make_shared<Camera>(glm::vec3(0.f, 0.f, 3.f),
                           glm::vec3(0.f, 0.f, 0.f),
                           glm::vec3(0.f, 1.f, 0.f), projection);
     }
@@ -26,7 +26,7 @@ namespace opengl
     void Scene::render()
     {
         for (auto&& entity : m_entities) {
-            entity.render(m_camera.value());
+            entity.render(*m_camera);
         }
     }
 

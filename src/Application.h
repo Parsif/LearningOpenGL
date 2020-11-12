@@ -20,7 +20,7 @@ namespace opengl
         Application operator=(const Application&) = delete;
         Application(const Application&) = delete;
 
-        void Run();
+        void run();
 
     private:
         MousePos mouse_pos_;

@@ -4,7 +4,7 @@
 int main()
 {
     opengl::Application application;
-    application.Run();
+    application.run();
 
     return 0;
 }
