@@ -11,7 +11,7 @@ namespace opengl
         Window() = default;
         Window(int width, int height, const std::string &title);
 
-        [[nodiscard]] inline auto getWindow() const { return window_; }
+        [[nodiscard]] inline auto getGLFWwindow() const { return window_; }
         [[nodiscard]] inline auto getWidth() const { return width_; }
         [[nodiscard]] inline auto getHeight() const { return height_; }
     private:

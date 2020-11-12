@@ -16,8 +16,7 @@ namespace opengl
 
         void render();
         void addEntity(Entity entity);
-        [[nodiscard]] inline auto&& getEntities() const { return m_entities; };
-        [[nodiscard]] inline auto&& getCamera() const { return m_camera; };
+        [[nodiscard]] inline auto getCamera() const { return m_camera; };
 
     private:
         std::vector<Entity> m_entities;

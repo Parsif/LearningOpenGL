@@ -1,13 +1,15 @@
 #pragma once
 
+#include "renderer/EngineRenderer.h"
+
 namespace opengl
 {
     class Layer
     {
     public:
-        virtual void attach() = 0;
-        virtual void detach() = 0;
-        virtual void onEvent() = 0;
+        virtual void onAttach() = 0;
+        virtual void onDetach() = 0;
         virtual ~Layer() = default;
     };
+
 }

@@ -2,9 +2,11 @@
 
 namespace opengl
 {
-    Entity::Entity(const std::string& model_filepath, const ShaderProgram& shader_program) : m_shader_program(shader_program)
+    Entity::Entity(const std::string& model_filepath, const ShaderProgram& shader_program, const glm::vec3& position)
+    : m_shader_program(shader_program), m_position(position)
     {
         m_model = Model(model_filepath);
+        m_model_matrix = glm::translate(m_model_matrix, position);
     }
 
     void Entity::render(const Camera& camera)
