@@ -11,7 +11,7 @@ namespace opengl
         glm::mat4 projection{1.0f};
         projection = glm::perspective(glm::radians(45.0f),
                                       static_cast<float>(window.getWidth()) / window.getHeight(),
-                                      0.1f, 100.f);
+                                      0.1f, 200.f);
 
         m_camera = std::make_shared<Camera>(glm::vec3(0.f, 0.f, 3.f),
                           glm::vec3(0.f, 0.f, 0.f),
@@ -25,7 +25,8 @@ namespace opengl
 
     void Scene::render()
     {
-        for (auto&& entity : m_entities) {
+            for (auto&& entity : m_entities) {
+            if (decltype(entity) ==)
             entity.render(*m_camera);
         }
     }

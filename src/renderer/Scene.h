@@ -4,7 +4,7 @@
 
 #include "Window.h"
 #include "Camera.h"
-#include "Entity.h"
+#include "SceneObject.h"
 
 
 namespace opengl

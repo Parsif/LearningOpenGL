@@ -30,10 +30,10 @@ namespace opengl
         {
             switch (texture_type_)
             {
-                case TextureType::diffuse:
+                case TextureType::Diffuse:
                     string_type_ = "diffuse";
                     break;
-                case TextureType::specular:
+                case TextureType::Specular:
                     string_type_ = "specular";
                     break;
             }

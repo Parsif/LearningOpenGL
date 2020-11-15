@@ -1,19 +1,14 @@
 #include "Application.h"
 
 #include "EventHandler.h"
-#include "buffers/Buffer.h"
-#include "model/Model.h"
 #include "renderer/EngineRenderer.h"
-
-#include <glm/gtc/matrix_transform.hpp>
-
-#include <iostream>
 
 namespace opengl
 {
-
+    Application* Application::s_instance = nullptr;
     Application::Application()
     {
+        s_instance = this;
         glfwInit();
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -26,9 +21,10 @@ namespace opengl
         glfwTerminate();
     }
 
-    void Application::Run()
+    void Application::run()
     {
         m_window = Window(1200, 800, "LearnOpenGL");
+
         if(glewInit() != GLEW_OK)
         {
             std::cout << "GLEW init failed\n";
@@ -38,41 +34,40 @@ namespace opengl
         glEnable(GL_DEBUG_OUTPUT);
         glDebugMessageCallback(messageCallback, nullptr);
         glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
-
-        mouse_pos_.x = m_window.getWidth() / 2;
-        mouse_pos_.y = m_window.getHeight() / 2;
         glEnable(GL_DEPTH_TEST);
 
-        glm::mat4 projection{1.0f};
-        projection = glm::perspective(glm::radians(45.0f),
-                                      static_cast<float>(m_window.getWidth()) / m_window.getHeight(),
-                                      0.1f, 100.f);
+        ShaderProgram basic_program({Shader("../src/shaders/basic_vertex.glsl", GL_VERTEX_SHADER),
+                                   Shader("../src/shaders/basic_fragment.glsl", GL_FRAGMENT_SHADER)});
 
-        const auto camera = std::make_shared<Camera>(glm::vec3(0.f, 0.f, 3.f),
-                            glm::vec3(0.f, 0.f, 0.f),
-                              glm::vec3(0.f, 1.f, 0.f), projection);
-        EventHandler::init(m_window.getWindow(), camera, mouse_pos_);
+        ShaderProgram light_source_program({Shader("../src/shaders/light_source_vertex.glsl", GL_VERTEX_SHADER),
+                                   Shader("../src/shaders/light_source_fragment.glsl", GL_FRAGMENT_SHADER)});
 
-       // Model backpack("../res/backpack/backpack.obj");
-
-        const Shader backpack_vertex_shader("../src/shaders/backpack_vertex.glsl", GL_VERTEX_SHADER);
-        const Shader backpack_fragment_shader("../src/shaders/backpack_fragment.glsl", GL_FRAGMENT_SHADER);
-        ShaderProgram backpack_sp({backpack_vertex_shader, backpack_fragment_shader});
         std::vector<Entity> entities;
-        entities.emplace_back("../res/backpack/backpack.obj", backpack_sp);
+        entities.emplace_back("../res/backpack/backpack.obj", basic_program);
+        entities.emplace_back("../res/floor/floor.obj", basic_program);
+        entities.emplace_back("../res/ball/ball.obj", light_source_program,
+                              glm::vec3(5.0f, 0.0f, 0.0f), glm::vec3(0.01f));
+
         Scene scene(std::move(entities), m_window);
-        EngineRenderer engine_renderer(scene);
+        EngineRenderer engine_renderer(std::move(scene));
+        EventHandler::init(m_window.getGLFWwindow(), engine_renderer.getActiveCamera(),
+                           glm::vec2( m_window.getWidth() / 2, m_window.getHeight() / 2));
 
+        m_ImGuiLayer.onAttach();
 
-
-        while (!glfwWindowShouldClose(m_window.getWindow()))
+        while (!glfwWindowShouldClose(m_window.getGLFWwindow()))
         {                                                                                       
-            glfwPollEvents();
             glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
             engine_renderer.render();
-            glfwSwapBuffers(m_window.getWindow());
+
+            m_ImGuiLayer.begin();
+            m_ImGuiLayer.onImGuiRender();
+            m_ImGuiLayer.end();
+            EventHandler::processInput(m_window.getGLFWwindow());
+            glfwSwapBuffers(m_window.getGLFWwindow());
+            glfwPollEvents();
         }
     }
 

@@ -30,7 +30,6 @@ namespace opengl
         [[nodiscard]] static inline auto& getInstance() { return *s_instance; }
 
     private:
-        MousePos mouse_pos_;
         Window m_window;
         ImGuiLayer m_ImGuiLayer;
         static Application* s_instance;

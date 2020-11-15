@@ -37,9 +37,9 @@ namespace opengl
         {
             textures_[i].bind(i);
             std::string texture_number;
-            if(textures_[i].getTextureType() == TextureType::diffuse)
+            if(textures_[i].getTextureType() == TextureType::Diffuse)
                 texture_number = std::to_string(diffuse_counter++);
-            else if(textures_[i].getTextureType() == TextureType::diffuse)
+            else if(textures_[i].getTextureType() == TextureType::Diffuse)
                 texture_number = std::to_string(specular_counter++);
             shader_program.uniform1i("u_material." + textures_[i].getStringType() + texture_number, i);
         }

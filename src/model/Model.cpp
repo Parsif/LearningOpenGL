@@ -1,6 +1,7 @@
 #include "Model.h"
+
 #include <assimp/Importer.hpp>
-#include <iostream>
+#include <std_image.h>
 
 namespace opengl
 {
@@ -82,8 +83,8 @@ namespace opengl
         if(mesh->mMaterialIndex >= 0)
         {
             aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
-            auto diffuse_map = loadMaterialTextures(material, aiTextureType_DIFFUSE, TextureType::diffuse);
-            auto specular_map = loadMaterialTextures(material, aiTextureType_SPECULAR, TextureType::specular);
+            auto diffuse_map = loadMaterialTextures(material, aiTextureType_DIFFUSE, TextureType::Diffuse);
+            auto specular_map = loadMaterialTextures(material, aiTextureType_SPECULAR, TextureType::Specular);
             textures.insert(textures.end(), diffuse_map.begin(), diffuse_map.end());
             textures.insert(textures.end(), specular_map.begin(), specular_map.end());
         }

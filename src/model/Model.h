@@ -4,7 +4,7 @@
 #include "ShaderProgram.h"
 #include "Mesh.h"
 
-#include <vector>
+#include "pch.h"
 
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>

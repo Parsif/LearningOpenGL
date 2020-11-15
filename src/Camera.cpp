@@ -1,8 +1,5 @@
 #include "Camera.h"
 
-#include "glm/gtc/matrix_transform.hpp"
-
-#include <iostream>
 
 namespace opengl
 {
@@ -14,19 +11,19 @@ namespace opengl
 
     void Camera::translate(Direction direction)
     {
-        const float kCameraSpeed = 0.3f;
+        const float kCameraSpeed = 0.15f;
         switch (direction)
         {
-            case Direction::up:
+            case Direction::Up:
                 position_ += front_ * kCameraSpeed;
                 break;
-            case Direction::down:
+            case Direction::Down:
                 position_ -= front_ * kCameraSpeed;
                 break;
-            case Direction::right:
+            case Direction::Right:
                 position_ += glm::normalize(glm::cross(front_, up_)) * kCameraSpeed;
                 break;
-            case Direction::left:
+            case Direction::Left:
                 position_ -= glm::normalize(glm::cross(front_, up_)) * kCameraSpeed;
                 break;
         }

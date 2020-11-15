@@ -1,26 +1,28 @@
 #pragma once
 
 #include "pch.h"
+#include "Entity.h"
 
 namespace opengl
 {
-    struct Light
+    class Light : public Entity
     {
+    public:
         glm::vec3 ambient, diffuse, specular;
     };
 
-    struct DirLight : Light
+    class DirectionLight : Light
     {
         glm::vec3 direction;
     };
 
-    struct PointLight : Light
+    class PointLight : Light
     {
         glm::vec3 position;
         float constant, linear, quadratic;
     };
 
-    struct SpotLight : Light
+    class SpotLight : Light
     {
         glm::vec3 position, direction;
         float constant, linear, quadratic, cutoff;
