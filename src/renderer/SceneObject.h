@@ -4,18 +4,18 @@
 
 #include "model/Model.h"
 #include "Camera.h"
-#include "Entity.h"
+#include "Light.h"
 
 namespace opengl
 {
-    class SceneObject : public Entity
+    class SceneObject
     {
     public:
         SceneObject(const std::string& model_filepath, const ShaderProgram& shader_program,
                     const glm::vec3& position = glm::vec3(0.0f), const glm::vec3& scale = glm::vec3(1.0f));
 
         [[nodiscard]] auto inline getPosition() const { return m_position; }
-        void render(const Camera& camera);
+        void render(const Camera& camera, const PointLight& light);
 
     private:
         ShaderProgram m_shader_program;

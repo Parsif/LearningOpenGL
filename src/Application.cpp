@@ -36,19 +36,24 @@ namespace opengl
         glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
         glEnable(GL_DEPTH_TEST);
 
-        ShaderProgram basic_program({Shader("../src/shaders/basic_vertex.glsl", GL_VERTEX_SHADER),
-                                   Shader("../src/shaders/basic_fragment.glsl", GL_FRAGMENT_SHADER)});
+        ShaderProgram basic_program({Shader("../src/shaders/lighting_vertex.glsl", GL_VERTEX_SHADER),
+                                   Shader("../src/shaders/lighting_fragment.glsl", GL_FRAGMENT_SHADER)});
 
         ShaderProgram light_source_program({Shader("../src/shaders/light_source_vertex.glsl", GL_VERTEX_SHADER),
                                    Shader("../src/shaders/light_source_fragment.glsl", GL_FRAGMENT_SHADER)});
 
-        std::vector<Entity> entities;
+        std::vector<SceneObject> entities;
         entities.emplace_back("../res/backpack/backpack.obj", basic_program);
         entities.emplace_back("../res/floor/floor.obj", basic_program);
         entities.emplace_back("../res/ball/ball.obj", light_source_program,
                               glm::vec3(5.0f, 0.0f, 0.0f), glm::vec3(0.01f));
 
-        Scene scene(std::move(entities), m_window);
+        auto point_light = PointLight(glm::vec3(0.5f), glm::vec3(0.7f), glm::vec3(0.7f),
+                                      glm::vec3(0.0f, 4.0f, 0.0f),
+                                      1.0f, 0.09f, 0.032f);
+        std::vector<PointLight> lights;
+        lights.push_back(point_light);
+        Scene scene(std::move(entities), std::move(lights), m_window);
         EngineRenderer engine_renderer(std::move(scene));
         EventHandler::init(m_window.getGLFWwindow(), engine_renderer.getActiveCamera(),
                            glm::vec2( m_window.getWidth() / 2, m_window.getHeight() / 2));

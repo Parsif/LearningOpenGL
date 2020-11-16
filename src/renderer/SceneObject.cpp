@@ -11,12 +11,13 @@ namespace opengl
         m_model_matrix = glm::scale(m_model_matrix, scale);
     }
 
-    void SceneObject::render(const Camera& camera)
+    void SceneObject::render(const Camera& camera, const PointLight& light)
     {
         m_shader_program.useShaderProgram();
-        m_shader_program.uniformMatrix4fv("model",  m_model_matrix);
-        m_shader_program.uniformMatrix4fv("view",  camera.getViewMatrix());
-        m_shader_program.uniformMatrix4fv("projection", camera.getProjectionMatrix());
+        m_shader_program.uniformMatrix4fv("u_model",  m_model_matrix);
+        m_shader_program.uniformMatrix4fv("u_view",  camera.getViewMatrix());
+        m_shader_program.uniformMatrix4fv("u_projection", camera.getProjectionMatrix());
+        light.render(m_shader_program);
         m_model->render(m_shader_program);
     }
 }

@@ -2,11 +2,11 @@
 
 #include <utility>
 
-
 namespace opengl
 {
 
-    Scene::Scene(std::vector<Entity>  entities, const Window& window) : m_entities(std::move(entities))
+    Scene::Scene(std::vector<SceneObject> scene_objects, std::vector<PointLight> lights, const Window& window)
+    : m_scene_objects(std::move(scene_objects)), m_lights(std::move(lights))
     {
         glm::mat4 projection{1.0f};
         projection = glm::perspective(glm::radians(45.0f),
@@ -18,16 +18,10 @@ namespace opengl
                           glm::vec3(0.f, 1.f, 0.f), projection);
     }
 
-    void Scene::addEntity(Entity entity)
-    {
-        m_entities.emplace_back(std::move(entity));
-    }
-
     void Scene::render()
     {
-            for (auto&& entity : m_entities) {
-            if (decltype(entity) ==)
-            entity.render(*m_camera);
+        for (auto&& objects : m_scene_objects) {
+            objects.render(*m_camera, m_lights[0]);
         }
     }
 
