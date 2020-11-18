@@ -1,8 +1,5 @@
 #include "Window.h"
 
-#include <iostream>
-
-
 namespace opengl
 {
     Window::Window(int width, int height, const std::string &title) : width_(width), height_(height)
@@ -19,7 +16,7 @@ namespace opengl
         glfwMakeContextCurrent(window_);
         glfwGetFramebufferSize(window_, &width_, &height_);
         glViewport(0, 0, width_, height_);
-        glfwSetInputMode(window_, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+       // glfwSetInputMode(window_, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     }
 }
 

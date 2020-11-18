@@ -13,7 +13,7 @@ add_executable(LearningOpenGL
         src/Camera.cpp src/buffers/VertexArray.cpp src/EventHandler.cpp src/EventHandler.h src/global.h
         src/model/Mesh.cpp src/model/Mesh.h src/model/Model.cpp src/model/Model.h src/buffers/Buffer.cpp src/buffers/Buffer.h
         src/Window.cpp src/Window.h src/renderer/EngineRenderer.cpp src/renderer/EngineRenderer.h src/renderer/SceneObject.cpp
-        src/renderer/SceneObject.h src/renderer/Scene.cpp src/layers/Layer.h src/pch.h src/layers/ImGuiLayer.cpp src/layers/ImGuiLayer.h src/renderer/Light.h)
+        src/renderer/SceneObject.h src/renderer/Scene.cpp src/layers/Layer.h src/pch.h src/layers/ImGuiLayer.cpp src/layers/ImGuiLayer.h src/renderer/Light.h src/buffers/FrameBuffer.cpp src/buffers/FrameBuffer.h src/types.h)
 
 
 target_include_directories(LearningOpenGL PRIVATE vendor src)

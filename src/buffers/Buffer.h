@@ -1,6 +1,7 @@
 #pragma once
 
 #include "pch.h"
+#include "types.h"
 
 namespace opengl
 {
@@ -10,7 +11,7 @@ namespace opengl
     class VertexBuffer
     {
     private:
-        unsigned int id_;
+        rendererIdType m_id;
     public:
         explicit VertexBuffer(const void* data, unsigned int size);
         ~VertexBuffer();
@@ -25,7 +26,7 @@ namespace opengl
     class IndexBuffer
     {
     private:
-        unsigned int id_;
+        rendererIdType m_id;
     public:
         explicit IndexBuffer(const unsigned int* data, unsigned int size);
         ~IndexBuffer();
@@ -66,17 +67,17 @@ namespace opengl
 
     struct BufferElement
     {
-        ShaderDataType Shader_type;
-        bool Normalized;
-        size_t Size;
-        uint32_t Offset;
+        ShaderDataType shader_type;
+        bool normalized;
+        size_t size;
+        uint32_t offset;
 
         BufferElement(ShaderDataType shader_type, bool normalized = false) :
-        Shader_type(shader_type), Normalized(normalized), Size(ShaderDataTypeSize(shader_type)){}
+                shader_type(shader_type), normalized(normalized), size(ShaderDataTypeSize(shader_type)){}
 
         [[nodiscard]] uint32_t GetComponentCount() const
         {
-            switch (Shader_type)
+            switch (shader_type)
             {
                 case ShaderDataType::Float:   return 1;
                 case ShaderDataType::Float2:  return 2;
@@ -99,29 +100,29 @@ namespace opengl
     class BufferLayout
     {
     private:
-        std::vector<BufferElement> elements_;
-        uint32_t stride_;
+        std::vector<BufferElement> m_elements;
+        uint32_t m_stride;
 
     public:
-        BufferLayout(std::initializer_list<BufferElement> buffer_elements) : elements_(buffer_elements)
+        BufferLayout(std::initializer_list<BufferElement> buffer_elements) : m_elements(buffer_elements)
         {
             size_t offset = 0;
-            stride_ = 0;
-            for (auto& element : elements_)
+            m_stride = 0;
+            for (auto& element : m_elements)
             {
-                element.Offset = offset;
-                offset += element.Size;
-                stride_ += element.Size;
+                element.offset = offset;
+                offset += element.size;
+                m_stride += element.size;
             }
         }
 
-        std::vector<BufferElement>::iterator begin() { return elements_.begin(); }
-        std::vector<BufferElement>::iterator end() { return elements_.end(); }
-        [[nodiscard]] std::vector<BufferElement>::const_iterator begin() const { return elements_.begin(); }
-        [[nodiscard]] std::vector<BufferElement>::const_iterator end() const { return elements_.end(); }
+        std::vector<BufferElement>::iterator begin() { return m_elements.begin(); }
+        std::vector<BufferElement>::iterator end() { return m_elements.end(); }
+        [[nodiscard]] std::vector<BufferElement>::const_iterator begin() const { return m_elements.begin(); }
+        [[nodiscard]] std::vector<BufferElement>::const_iterator end() const { return m_elements.end(); }
 
-        [[nodiscard]] inline auto& getElements() const { return elements_; }
-        [[nodiscard]] inline auto getStride() const { return stride_; }
+        [[nodiscard]] inline auto& getElements() const { return m_elements; }
+        [[nodiscard]] inline auto getStride() const { return m_stride; }
     };
 
 }

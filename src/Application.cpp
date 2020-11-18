@@ -1,3 +1,4 @@
+#include <buffers/FrameBuffer.h>
 #include "Application.h"
 
 #include "EventHandler.h"
@@ -60,16 +61,24 @@ namespace opengl
 
         m_ImGuiLayer.onAttach();
 
+        FrameBufferSpecifications specifications;
+        specifications.width = m_window.getWidth();
+        specifications.height = m_window.getHeight();
+        FrameBuffer frame_buffer(specifications);
+
         while (!glfwWindowShouldClose(m_window.getGLFWwindow()))
-        {                                                                                       
+        {
+            frame_buffer.bind();
             glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
             engine_renderer.render();
+            frame_buffer.unbind();
 
             m_ImGuiLayer.begin();
-            m_ImGuiLayer.onImGuiRender();
+            m_ImGuiLayer.onImGuiRender(frame_buffer);
             m_ImGuiLayer.end();
+
             EventHandler::processInput(m_window.getGLFWwindow());
             glfwSwapBuffers(m_window.getGLFWwindow());
             glfwPollEvents();
@@ -79,6 +88,8 @@ namespace opengl
     void Application::messageCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length,
                                       const GLchar *message, const void *user_param)
     {
+        if(severity == GL_DEBUG_SEVERITY_NOTIFICATION) return;
+
         auto source_str = [source]() -> std::string {
             switch (source)
             {
@@ -115,7 +126,6 @@ namespace opengl
                 default: return "UNKNOWN";
             }
         }();
-
         std::cout << source_str   << ", "
                   << type_str     << ", "
                   << severity_str << ", "

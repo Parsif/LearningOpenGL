@@ -8,12 +8,12 @@ namespace opengl
 {
     VertexArray::VertexArray()
     {
-        glGenVertexArrays(1, &id_);
+        glGenVertexArrays(1, &m_id);
     }
 
     void VertexArray::bind() const
     {
-        glBindVertexArray(id_);
+        glBindVertexArray(m_id);
     }
 
     void VertexArray::unbind() const

@@ -21,7 +21,7 @@ namespace opengl
         for(auto&& attribute : layout)
         {
             glEnableVertexAttribArray(i);
-            glVertexAttribPointer(i, attribute.GetComponentCount(), GL_FLOAT, GL_FALSE, layout.getStride(), (const void*)attribute.Offset);
+            glVertexAttribPointer(i, attribute.GetComponentCount(), GL_FLOAT, GL_FALSE, layout.getStride(), (const void*)attribute.offset);
             ++i;
         }
         vertex_array_.unbind();

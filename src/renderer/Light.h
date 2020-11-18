@@ -24,11 +24,10 @@ namespace opengl
     class DirectionLight : public Light
     {
     private:
-        glm::vec3 direction;
+        glm::vec3 m_direction;
     public:
         void render(const ShaderProgram& shader_program) const override
         {
-
         }
     };
 
@@ -43,6 +42,7 @@ namespace opengl
                    float constant, float linear, float quadratic) : Light(ambient, diffuse, specular),
                    m_position(position), m_constant(constant), m_linear(linear), m_quadratic(quadratic)
         {
+
         }
         void render(const ShaderProgram &shader_program) const override
         {

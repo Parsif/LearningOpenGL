@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Layer.h"
+#include "buffers/FrameBuffer.h"
 
 namespace opengl
 {
@@ -9,7 +10,7 @@ namespace opengl
     public:
         void onAttach() override;
         void onDetach() override;
-        void onImGuiRender();
+        void onImGuiRender(const FrameBuffer& frame_buffer);
         void begin();
         void end();
 

@@ -2,6 +2,7 @@
 
 #include "pch.h"
 #include "Shader.h"
+#include "types.h"
 
 namespace opengl
 {
@@ -10,7 +11,7 @@ namespace opengl
 
     public:
         explicit ShaderProgram(const std::vector<Shader> &shaders);
-        [[nodiscard]] inline auto getId() const { return shader_program_id_; };
+        [[nodiscard]] inline auto getId() const { return m_shader_program_id; };
         void useShaderProgram() const;
         void uniform1i(const std::string &uniform_name, int value1) const;
         void uniform1f(const std::string &uniform_name, float value1) const;
@@ -18,7 +19,7 @@ namespace opengl
         void uniformMatrix4fv(const std::string &uniform_name, const glm::mat4 &matrix) const;
         void uniformVec3f(const std::string &uniform_name, const glm::vec3 &vec) const;
     private:
-        int shader_program_id_;
+        rendererIdType m_shader_program_id;
     };
 }
 

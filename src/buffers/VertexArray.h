@@ -1,5 +1,7 @@
 #pragma once
 
+#include "types.h"
+
 namespace opengl
 {
     class VertexArray
@@ -11,7 +13,7 @@ namespace opengl
         void unbind() const;
 
     private:
-        unsigned int id_;
+        rendererIdType m_id;
     };
 
 }
