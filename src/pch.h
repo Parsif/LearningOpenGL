@@ -3,9 +3,6 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-
 #include <iostream>
 
 #include <initializer_list>
@@ -15,4 +12,5 @@
 #include <utility>
 #include <memory>
 #include <cstdint>
+#include <unordered_map>
 

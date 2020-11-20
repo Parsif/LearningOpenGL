@@ -3,6 +3,7 @@
 #include "global.h"
 #include "pch.h"
 
+#include <glm/glm.hpp>
 
 namespace opengl
 {

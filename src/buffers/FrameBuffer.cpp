@@ -40,7 +40,7 @@ namespace opengl
     void FrameBuffer::bind() const
     {
         glBindFramebuffer(GL_FRAMEBUFFER, m_id);
-        //glViewport(0, 0, m_specifications.width, m_specifications.height);
+        glViewport(0, 0, m_specifications.width, m_specifications.height);
     }
 
     void FrameBuffer::unbind() const

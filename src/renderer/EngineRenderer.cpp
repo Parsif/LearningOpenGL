@@ -10,7 +10,7 @@ namespace opengl
 
     }
 
-    void EngineRenderer::render()
+    void EngineRenderer::onUpdate()
     {
        m_active_scene.render();
     }

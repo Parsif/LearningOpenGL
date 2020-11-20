@@ -15,6 +15,8 @@ namespace opengl
         void end();
 
     private:
+        void renderDockingBegin();
+        void renderDockingEnd();
         void setDarkThemeColors();
     };
 }

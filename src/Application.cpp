@@ -40,14 +40,9 @@ namespace opengl
         ShaderProgram basic_program({Shader("../src/shaders/lighting_vertex.glsl", GL_VERTEX_SHADER),
                                    Shader("../src/shaders/lighting_fragment.glsl", GL_FRAGMENT_SHADER)});
 
-        ShaderProgram light_source_program({Shader("../src/shaders/light_source_vertex.glsl", GL_VERTEX_SHADER),
-                                   Shader("../src/shaders/light_source_fragment.glsl", GL_FRAGMENT_SHADER)});
-
         std::vector<SceneObject> entities;
         entities.emplace_back("../res/backpack/backpack.obj", basic_program);
         entities.emplace_back("../res/floor/floor.obj", basic_program);
-        entities.emplace_back("../res/ball/ball.obj", light_source_program,
-                              glm::vec3(5.0f, 0.0f, 0.0f), glm::vec3(0.01f));
 
         auto point_light = PointLight(glm::vec3(0.5f), glm::vec3(0.7f), glm::vec3(0.7f),
                                       glm::vec3(0.0f, 4.0f, 0.0f),
@@ -72,7 +67,7 @@ namespace opengl
             glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-            engine_renderer.render();
+            engine_renderer.onUpdate();
             frame_buffer.unbind();
 
             m_ImGuiLayer.begin();

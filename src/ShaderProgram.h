@@ -4,6 +4,8 @@
 #include "Shader.h"
 #include "types.h"
 
+#include <glm/glm.hpp>
+
 namespace opengl
 {
     class ShaderProgram

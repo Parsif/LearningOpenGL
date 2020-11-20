@@ -1,5 +1,7 @@
 #include "SceneObject.h"
 
+#include <glm/gtc/matrix_transform.hpp>
+
 namespace opengl
 {
     SceneObject::SceneObject(const std::string& model_filepath, const ShaderProgram& shader_program, const glm::vec3& position,
