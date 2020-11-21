@@ -52,7 +52,7 @@ namespace opengl
         static bool show = true;
             ImGui::Begin("SceneView");
             auto texture_id = frame_buffer.getColorAttachmentId();
-            ImGui::Image((void*)texture_id, ImVec2(526.0f, 526.0f));
+            ImGui::Image((void*)texture_id,  ImGui::GetWindowSize(), ImVec2(0, 1), ImVec2(1, 0));
             ImGui::End();
         renderDockingEnd();
     }

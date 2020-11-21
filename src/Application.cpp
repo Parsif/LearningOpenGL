@@ -1,8 +1,8 @@
-#include <buffers/FrameBuffer.h>
+#include "buffers/FrameBuffer.h"
+#include "ecs/ComponentManager.h"
 #include "Application.h"
 
 #include "EventHandler.h"
-#include "renderer/EngineRenderer.h"
 
 namespace opengl
 {
