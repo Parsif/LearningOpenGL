@@ -15,7 +15,7 @@ namespace opengl
     {
     public:
         Model(const std::string &path);
-        void render(const ShaderProgram &shader_program);
+        void render(const ShaderProgram &shader_program) const;
 
     private:
         std::vector<Mesh> m_meshes;

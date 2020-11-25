@@ -1,5 +1,4 @@
 #include "buffers/FrameBuffer.h"
-#include "ecs/ComponentManager.h"
 #include "Application.h"
 
 #include "EventHandler.h"
@@ -25,33 +24,19 @@ namespace opengl
     void Application::run()
     {
         m_window = Window(1200, 800, "LearnOpenGL");
-
         if(glewInit() != GLEW_OK)
         {
             std::cout << "GLEW init failed\n";
             return;
         }
+        Scene scene(m_window);
 
         glEnable(GL_DEBUG_OUTPUT);
         glDebugMessageCallback(messageCallback, nullptr);
         glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
         glEnable(GL_DEPTH_TEST);
 
-        ShaderProgram basic_program({Shader("../src/shaders/lighting_vertex.glsl", GL_VERTEX_SHADER),
-                                   Shader("../src/shaders/lighting_fragment.glsl", GL_FRAGMENT_SHADER)});
-
-        std::vector<SceneObject> entities;
-        entities.emplace_back("../res/backpack/backpack.obj", basic_program);
-        entities.emplace_back("../res/floor/floor.obj", basic_program);
-
-        auto point_light = PointLight(glm::vec3(0.5f), glm::vec3(0.7f), glm::vec3(0.7f),
-                                      glm::vec3(0.0f, 4.0f, 0.0f),
-                                      1.0f, 0.09f, 0.032f);
-        std::vector<PointLight> lights;
-        lights.push_back(point_light);
-        Scene scene(std::move(entities), std::move(lights), m_window);
-        EngineRenderer engine_renderer(std::move(scene));
-        EventHandler::init(m_window.getGLFWwindow(), engine_renderer.getActiveCamera(),
+        EventHandler::init(m_window.getGLFWwindow(), scene.getActiveCamera(),
                            glm::vec2( m_window.getWidth() / 2, m_window.getHeight() / 2));
 
         m_ImGuiLayer.onAttach();
@@ -66,8 +51,7 @@ namespace opengl
             frame_buffer.bind();
             glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-            engine_renderer.onUpdate();
+            scene.onUpdate();
             frame_buffer.unbind();
 
             m_ImGuiLayer.begin();

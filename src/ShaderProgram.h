@@ -12,6 +12,7 @@ namespace opengl
     {
 
     public:
+        ShaderProgram() = default;
         explicit ShaderProgram(const std::vector<Shader> &shaders);
         [[nodiscard]] inline auto getId() const { return m_shader_program_id; };
         void useShaderProgram() const;

@@ -5,24 +5,19 @@
 
 namespace opengl
 {
-    using EntityIdType = uint32_t;
-
-    struct Component {};
-
-    struct TransformComponent : Component
+    struct TransformComponent
     {
-        glm::vec3 position;
-        glm::vec3 scale;
-        glm::vec3 rotation;
+        glm::mat4 transform{1.0f};
     };
 
-    struct PointLightComponent : Component
+    struct ModelComponent
+    {
+        std::string model_path;
+    };
+
+    struct PointLightComponent
     {
         glm::vec3 position;
         float constant, linear, quadratic;
-        std::string uniform_name;
     };
-
-    template <typename Type>
-    using ComponentMapType = std::unordered_map<EntityIdType, Type>;
 }

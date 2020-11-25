@@ -39,7 +39,7 @@ namespace opengl
             }
         }
 
-        void bind(unsigned int slot)
+        void bind(unsigned int slot) const
         {
             glActiveTexture(GL_TEXTURE0 + slot);
             glBindTexture(GL_TEXTURE_2D, id_);
@@ -53,8 +53,8 @@ namespace opengl
     {
     private:
         VertexArray vertex_array_;
-        std::unique_ptr<VertexBuffer> vertex_buffer_;
-        std::unique_ptr<IndexBuffer> index_buffer_;
+        VertexBuffer vertex_buffer_;
+        IndexBuffer index_buffer_;
 
         std::vector<Vertex> vertices_;
         std::vector<unsigned int> indices_;
@@ -62,7 +62,7 @@ namespace opengl
 
     public:
         Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<ModelTexture> textures);
-        void render(const ShaderProgram &shader_program);
+        void render(const ShaderProgram &shader_program) const;
     };
 }
 

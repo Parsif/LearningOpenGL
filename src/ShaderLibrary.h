@@ -1,10 +1,20 @@
 #pragma once
 
+#include "ShaderProgram.h"
 
-class ShaderLibrary
+namespace opengl
 {
+    class ShaderLibrary
+    {
+    public:
+        ShaderLibrary();
 
-};
+        [[nodiscard]] inline const auto& getLightningProgram() const { return lightning_program; }
+    private:
+        ShaderProgram lightning_program;
+    };
+}
+
 
 
 

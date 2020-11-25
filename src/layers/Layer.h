@@ -1,6 +1,6 @@
 #pragma once
 
-#include "renderer/EngineRenderer.h"
+#include "renderer/Renderer3D.h"
 
 namespace opengl
 {

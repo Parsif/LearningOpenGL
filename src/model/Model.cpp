@@ -11,7 +11,7 @@ namespace opengl
         loadModel(path);
     }
 
-    void Model::render(const ShaderProgram &shader_program)
+    void Model::render(const ShaderProgram &shader_program) const
     {
         for(auto&& mesh : m_meshes)
         {

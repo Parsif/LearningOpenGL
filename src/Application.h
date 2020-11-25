@@ -11,6 +11,8 @@
 #include "FileTexture.h"
 #include "Window.h"
 
+#include "ecs/Scene.h"
+
 #include "layers/ImGuiLayer.h"
 
 

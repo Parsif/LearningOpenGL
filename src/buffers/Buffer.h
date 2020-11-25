@@ -13,6 +13,7 @@ namespace opengl
     private:
         rendererIdType m_id;
     public:
+        VertexBuffer() = default;
         explicit VertexBuffer(const void* data, unsigned int size);
         ~VertexBuffer();
 
@@ -28,6 +29,7 @@ namespace opengl
     private:
         rendererIdType m_id;
     public:
+        IndexBuffer() = default;
         explicit IndexBuffer(const unsigned int* data, unsigned int size);
         ~IndexBuffer();
 

@@ -5,9 +5,10 @@
 namespace opengl
 {
 	Camera::Camera(const glm::vec3& position, const glm::vec3& front, const glm::vec3& up, const glm::mat4 &projection) :
-            position_(position), front_(front), up_(up), projection_(projection)
+            m_position(position), m_front(front), m_up(up), m_projection(projection)
 	{
-		view_ = glm::lookAt(position_, position_ + front_, up_);
+        m_view = glm::lookAt(m_position, m_position + m_front, m_up);
+        m_view_projection = m_projection * m_view;
     }
 
     void Camera::translate(Direction direction)
@@ -16,25 +17,27 @@ namespace opengl
         switch (direction)
         {
             case Direction::Up:
-                position_ += front_ * kCameraSpeed;
+                m_position += m_front * kCameraSpeed;
                 break;
             case Direction::Down:
-                position_ -= front_ * kCameraSpeed;
+                m_position -= m_front * kCameraSpeed;
                 break;
             case Direction::Right:
-                position_ += glm::normalize(glm::cross(front_, up_)) * kCameraSpeed;
+                m_position += glm::normalize(glm::cross(m_front, m_up)) * kCameraSpeed;
                 break;
             case Direction::Left:
-                position_ -= glm::normalize(glm::cross(front_, up_)) * kCameraSpeed;
+                m_position -= glm::normalize(glm::cross(m_front, m_up)) * kCameraSpeed;
                 break;
         }
-        view_ = glm::lookAt(position_, position_ + front_, up_);
+        m_view = glm::lookAt(m_position, m_position + m_front, m_up);
+        m_view_projection = m_projection * m_view;
     }
 
     void Camera::rotate(const glm::vec3 &target)
     {
-        front_ = target;
-        view_ = glm::lookAt(position_, position_ + front_, up_);
+        m_front = target;
+        m_view = glm::lookAt(m_position, m_position + m_front, m_up);
+        m_view_projection = m_projection * m_view;
     }
 
 }

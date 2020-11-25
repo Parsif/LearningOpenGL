@@ -9,26 +9,12 @@ namespace opengl
     {
     protected:
         glm::vec3 p_ambient, p_diffuse, p_specular;
-        Light(const glm::vec3& ambient, const glm::vec3& diffuse, const glm::vec3& specular)
-        : p_ambient(ambient), p_diffuse(diffuse), p_specular(specular)
-        {
-        }
-
-    public:
-        virtual void render(const ShaderProgram& shader_program) const
-        {
-
-        };
     };
 
     class DirectionLight : public Light
     {
     private:
         glm::vec3 m_direction;
-    public:
-        void render(const ShaderProgram& shader_program) const override
-        {
-        }
     };
 
     class PointLight : public Light
@@ -39,12 +25,11 @@ namespace opengl
 
     public:
         PointLight(const glm::vec3& ambient, const glm::vec3& diffuse, const glm::vec3& specular, const glm::vec3& position,
-                   float constant, float linear, float quadratic) : Light(ambient, diffuse, specular),
-                   m_position(position), m_constant(constant), m_linear(linear), m_quadratic(quadratic)
+                   float constant, float linear, float quadratic)
         {
 
         }
-        void render(const ShaderProgram &shader_program) const override
+        void render(const ShaderProgram &shader_program) const
         {
             shader_program.useShaderProgram();
             shader_program.uniformVec3f("u_point_light.ambient", p_ambient);
@@ -64,7 +49,7 @@ namespace opengl
         float constant, linear, quadratic, cutoff;
 
     public:
-        void render(const ShaderProgram &shader_program) const override
+        void render(const ShaderProgram &shader_program) const
         {
 
         }

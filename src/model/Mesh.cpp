@@ -8,8 +8,8 @@ namespace opengl
             vertices_(std::move(vertices)), indices_(std::move(indices)), textures_(std::move(textures))
     {
         vertex_array_.bind();
-        vertex_buffer_ = std::make_unique<VertexBuffer>(vertices_.data(), vertices_.size() * sizeof(decltype (vertices_)::value_type));
-        index_buffer_ = std::make_unique<IndexBuffer>(indices_.data(), indices_.size() * sizeof(decltype (indices_)::value_type));
+        vertex_buffer_ = VertexBuffer(vertices_.data(), vertices_.size() * sizeof(decltype (vertices_)::value_type));
+        index_buffer_ = IndexBuffer(indices_.data(), indices_.size() * sizeof(decltype (indices_)::value_type));
 
         BufferLayout layout = {
                 {ShaderDataType::Float3},
@@ -28,7 +28,7 @@ namespace opengl
     }
 #pragma clang diagnostic pop
 
-    void Mesh::render(const ShaderProgram &shader_program)
+    void Mesh::render(const ShaderProgram &shader_program) const
     {
         unsigned int diffuse_counter = 0;
         unsigned int specular_counter = 0;
