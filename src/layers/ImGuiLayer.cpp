@@ -7,6 +7,11 @@
 
 namespace opengl
 {
+    ImGuiLayer::ImGuiLayer(const std::shared_ptr<Scene>& scene)
+    {
+        m_scene_hierarchy_panel = SceneHierarchyPanel(scene);
+    }
+
     void ImGuiLayer::onAttach()
     {
         // Setup Dear ImGui context
@@ -54,6 +59,7 @@ namespace opengl
             auto texture_id = frame_buffer.getColorAttachmentId();
             ImGui::Image((void*)texture_id,  ImGui::GetWindowSize(), ImVec2(0, 1), ImVec2(1, 0));
             ImGui::End();
+            m_scene_hierarchy_panel.onImGuiRender();
         renderDockingEnd();
     }
 
@@ -192,6 +198,7 @@ namespace opengl
     {
         ImGui::End();
     }
+
 
 
 }

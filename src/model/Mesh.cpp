@@ -2,14 +2,12 @@
 
 namespace opengl
 {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wint-to-void-pointer-cast"
     Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<ModelTexture> textures) :
-            vertices_(std::move(vertices)), indices_(std::move(indices)), textures_(std::move(textures))
+            m_vertices(std::move(vertices)), m_indices(std::move(indices)), m_textures(std::move(textures))
     {
-        vertex_array_.bind();
-        vertex_buffer_ = VertexBuffer(vertices_.data(), vertices_.size() * sizeof(decltype (vertices_)::value_type));
-        index_buffer_ = IndexBuffer(indices_.data(), indices_.size() * sizeof(decltype (indices_)::value_type));
+        m_vertex_array.bind();
+        m_vertex_buffer = std::make_unique<VertexBuffer>(m_vertices.data(), m_vertices.size() * sizeof(decltype (m_vertices)::value_type));
+        m_index_buffer = std::make_unique<IndexBuffer>(m_indices.data(), m_indices.size() * sizeof(decltype (m_indices)::value_type));
 
         BufferLayout layout = {
                 {ShaderDataType::Float3},
@@ -24,27 +22,28 @@ namespace opengl
             glVertexAttribPointer(i, attribute.GetComponentCount(), GL_FLOAT, GL_FALSE, layout.getStride(), (const void*)attribute.offset);
             ++i;
         }
-        vertex_array_.unbind();
+        m_vertex_array.unbind();
     }
-#pragma clang diagnostic pop
 
     void Mesh::render(const ShaderProgram &shader_program) const
     {
         unsigned int diffuse_counter = 0;
         unsigned int specular_counter = 0;
 
-        for (unsigned int i = 0; i < textures_.size(); ++i)
+        for (unsigned int i = 0; i < m_textures.size(); ++i)
         {
-            textures_[i].bind(i);
+            m_textures[i].bind(i);
             std::string texture_number;
-            if(textures_[i].getTextureType() == TextureType::Diffuse)
+            if(m_textures[i].getTextureType() == TextureType::Diffuse)
                 texture_number = std::to_string(diffuse_counter++);
-            else if(textures_[i].getTextureType() == TextureType::Diffuse)
+            else if(m_textures[i].getTextureType() == TextureType::Specular)
                 texture_number = std::to_string(specular_counter++);
-            shader_program.uniform1i("u_material." + textures_[i].getStringType() + texture_number, i);
+            shader_program.uniform1i("u_material." + m_textures[i].getStringType() + texture_number, i);
         }
-        vertex_array_.bind();
-        glDrawElements(GL_TRIANGLES, indices_.size(), GL_UNSIGNED_INT, 0);
-        vertex_array_.unbind();
+        shader_program.uniform1f("u_material.shininess", 64.0f);
+
+        m_vertex_array.bind();
+        glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT, 0);
+        m_vertex_array.unbind();
     }
 }

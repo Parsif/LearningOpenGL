@@ -24,10 +24,23 @@ namespace opengl
     void Scene::onUpdate()
     {
         auto group = m_registry.group<TransformComponent, ModelComponent>();
+        auto view = m_registry.view<PointLightComponent>();
+
+        auto& lighting_program = m_shader_library.getLightningProgram();
+        lighting_program.useShaderProgram();
         for(auto entity: group) {
+            for(auto entity1 : view)
+            {
+                Renderer3D::renderPointLight(view.get<PointLightComponent>(entity1), lighting_program);
+            }
             auto [transform_comp, model_comp] = group.get<TransformComponent, ModelComponent>(entity);
             Renderer3D::renderModel(m_model_library.getModel(model_comp.model_path),
-                                    transform_comp.transform, m_active_camera->getViewProjection());
+                                    transform_comp.transform, m_active_camera->getViewProjection(),
+                                    m_active_camera->getGetPosition(), lighting_program);
         }
+
+
     }
+
+
 }

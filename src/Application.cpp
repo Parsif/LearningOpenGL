@@ -1,6 +1,4 @@
-#include "buffers/FrameBuffer.h"
 #include "Application.h"
-
 #include "EventHandler.h"
 
 namespace opengl
@@ -29,14 +27,28 @@ namespace opengl
             std::cout << "GLEW init failed\n";
             return;
         }
-        Scene scene(m_window);
+
+        m_active_scene = std::make_shared<Scene>(m_window);
+        m_ImGuiLayer = ImGuiLayer(m_active_scene);
+        auto backpack_e = m_active_scene->createEntity("Backpack");
+        m_active_scene->addComponent<TransformComponent>(backpack_e);
+        m_active_scene->addComponent<ModelComponent>(backpack_e, "../res/backpack/backpack.obj");
+
+        auto floor_entity = m_active_scene->createEntity("Floor");
+        m_active_scene->addComponent<TransformComponent>(floor_entity);
+        m_active_scene->addComponent<ModelComponent>(floor_entity, "../res/floor/floor.obj");
+
+        auto point_light_e = m_active_scene->createEntity("Point light");
+        m_active_scene->addComponent<PointLightComponent>(point_light_e, glm::vec3(1.0f, 0.9f, 0.1f), glm::vec3(0.7f), glm::vec3(0.7f),
+                                                glm::vec3(0.0f, 4.0f, 0.0f),
+                                                1.0f, 0.09f, 0.032f);
 
         glEnable(GL_DEBUG_OUTPUT);
         glDebugMessageCallback(messageCallback, nullptr);
         glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
         glEnable(GL_DEPTH_TEST);
 
-        EventHandler::init(m_window.getGLFWwindow(), scene.getActiveCamera(),
+        EventHandler::init(m_window.getGLFWwindow(), m_active_scene->getActiveCamera(),
                            glm::vec2( m_window.getWidth() / 2, m_window.getHeight() / 2));
 
         m_ImGuiLayer.onAttach();
@@ -51,7 +63,7 @@ namespace opengl
             frame_buffer.bind();
             glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-            scene.onUpdate();
+            m_active_scene->onUpdate();
             frame_buffer.unbind();
 
             m_ImGuiLayer.begin();

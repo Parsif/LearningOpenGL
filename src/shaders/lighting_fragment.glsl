@@ -47,7 +47,6 @@ uniform PointLight u_point_light;
 uniform SpotLight u_spot_light;
 uniform Material u_material;
 
-uniform vec3 u_object_color;
 uniform vec3 u_view_pos;
 
 in vec3 vs_normal;
@@ -126,7 +125,7 @@ vec3 caclSpotLight(vec3 normal)
     vec3 specular = u_spot_light.specular * specular_angle * vec3(texture(u_material.specular0, vs_tex_coords));
 
     float distance = length(u_spot_light.position - vs_frag_pos);
-    float attenuation = 1.0f / (u_spot_light.constant + u_point_light.linear * distance + u_point_light.quadratic * distance * distance);
+    float attenuation = 1.0f / (u_spot_light.constant + u_spot_light.linear * distance + u_spot_light.quadratic * distance * distance);
     ambient *= attenuation;
     diffuse *= attenuation;
     specular *= attenuation;

@@ -19,22 +19,16 @@ namespace opengl
 
     class ModelTexture
     {
-    private:
-        unsigned int id_;
-        std::string file_path_;
-        std::string string_type_;
-        TextureType texture_type_;
-
     public:
-        ModelTexture(unsigned int id, std::string file_path, TextureType texture_type) : id_(id), file_path_(std::move(file_path)), texture_type_(texture_type)
+        ModelTexture(unsigned int id, std::string file_path, TextureType texture_type) : m_id(id), m_file_path(std::move(file_path)), m_texture_type(texture_type)
         {
-            switch (texture_type_)
+            switch (m_texture_type)
             {
                 case TextureType::Diffuse:
-                    string_type_ = "diffuse";
+                    m_string_type = "diffuse";
                     break;
                 case TextureType::Specular:
-                    string_type_ = "specular";
+                    m_string_type = "specular";
                     break;
             }
         }
@@ -42,27 +36,33 @@ namespace opengl
         void bind(unsigned int slot) const
         {
             glActiveTexture(GL_TEXTURE0 + slot);
-            glBindTexture(GL_TEXTURE_2D, id_);
+            glBindTexture(GL_TEXTURE_2D, m_id);
         };
-        [[nodiscard]] inline auto getFilePath() const { return file_path_; }
-        [[nodiscard]] inline auto getTextureType() const { return texture_type_; }
-        [[nodiscard]] inline auto getStringType() const { return string_type_; }
+        [[nodiscard]] inline auto getFilePath() const { return m_file_path; }
+        [[nodiscard]] inline auto getTextureType() const { return m_texture_type; }
+        [[nodiscard]] inline auto getStringType() const { return m_string_type; }
+
+    private:
+        unsigned int m_id;
+        std::string m_file_path;
+        std::string m_string_type;
+        TextureType m_texture_type;
     };
 
     class Mesh
     {
-    private:
-        VertexArray vertex_array_;
-        VertexBuffer vertex_buffer_;
-        IndexBuffer index_buffer_;
-
-        std::vector<Vertex> vertices_;
-        std::vector<unsigned int> indices_;
-        std::vector<ModelTexture> textures_;
-
     public:
         Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<ModelTexture> textures);
         void render(const ShaderProgram &shader_program) const;
+
+    private:
+        VertexArray m_vertex_array;
+        std::shared_ptr<VertexBuffer> m_vertex_buffer;
+        std::shared_ptr<IndexBuffer> m_index_buffer;
+
+        std::vector<Vertex> m_vertices;
+        std::vector<unsigned int> m_indices;
+        std::vector<ModelTexture> m_textures;
     };
 }
 

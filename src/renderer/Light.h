@@ -29,16 +29,9 @@ namespace opengl
         {
 
         }
-        void render(const ShaderProgram &shader_program) const
+        void render() const
         {
-            shader_program.useShaderProgram();
-            shader_program.uniformVec3f("u_point_light.ambient", p_ambient);
-            shader_program.uniformVec3f("u_point_light.diffuse", p_diffuse);
-            shader_program.uniformVec3f("u_point_light.specular", p_specular);
-            shader_program.uniformVec3f("u_point_light.position", m_position);
-            shader_program.uniform1f("u_point_light.constant", m_constant);
-            shader_program.uniform1f("u_point_light.linear", m_linear);
-            shader_program.uniform1f("u_point_light.quadratic", m_quadratic);
+
         }
     };
 
