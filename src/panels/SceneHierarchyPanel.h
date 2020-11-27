@@ -13,6 +13,7 @@ namespace opengl
 
     private:
         void drawEntityNode(entt::entity entity);
+        void drawEntityProperties(entt::entity entity);
 
     private:
         std::shared_ptr<Scene> m_scene;

@@ -10,11 +10,14 @@ namespace opengl
 
     void SceneHierarchyPanel::onImGuiRender()
     {
-        ImGui::Begin("SceneHierarchy");
+        ImGui::Begin("Scene hierarchy");
         m_scene->m_registry.each([&](auto entity)
         {
             drawEntityNode(entity);
         });
+        ImGui::End();
+        ImGui::Begin("Properties");
+        drawEntityProperties(m_selected_entity);
         ImGui::End();
     }
 
@@ -31,6 +34,26 @@ namespace opengl
         if(opened)
         {
             ImGui::TreePop();
+        }
+    }
+
+    void SceneHierarchyPanel::drawEntityProperties(entt::entity entity)
+    {
+        if(m_scene->m_registry.has<TagComponent>(entity))
+        {
+            auto& tag = m_scene->m_registry.get<TagComponent>(entity).tag_name;
+            char buffer[256];
+            memset(buffer, 0, sizeof(buffer));
+            strcpy_s(buffer, sizeof(buffer), tag.c_str());
+            if(ImGui::InputText("Tag", buffer, sizeof(buffer)))
+            {
+                tag = std::string(buffer);
+            }
+        }
+
+        if(m_scene->m_registry.has<TransformComponent>(entity))
+        {
+//            ImGui::DragFloat3()
         }
     }
 }
