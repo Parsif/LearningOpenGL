@@ -17,7 +17,7 @@ namespace opengl
 
     private:
         std::shared_ptr<Scene> m_scene;
-        entt::entity m_selected_entity;
+        entt::entity m_selected_entity{};
     };
 }
 

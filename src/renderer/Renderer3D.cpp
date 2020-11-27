@@ -12,6 +12,8 @@ namespace opengl
         model.render(shader_program);
     }
 
+
+
     void Renderer3D::renderPointLight(PointLightComponent point_light, const ShaderProgram &shader_program)
     {
         shader_program.uniformVec3f("u_point_light.ambient", point_light.ambient);
@@ -21,7 +23,6 @@ namespace opengl
         shader_program.uniform1f("u_point_light.constant", point_light.constant);
         shader_program.uniform1f("u_point_light.linear", point_light.linear);
         shader_program.uniform1f("u_point_light.quadratic", point_light.quadratic);
-
     }
 }
 

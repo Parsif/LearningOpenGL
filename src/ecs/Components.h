@@ -1,7 +1,9 @@
 #pragma once
 
 #include "pch.h"
+
 #include <glm/glm.hpp>
+#include <glm/ext/matrix_transform.hpp>
 
 namespace opengl
 {
@@ -13,9 +15,23 @@ namespace opengl
 
     struct TransformComponent
     {
-        TransformComponent(const glm::mat4& trans) : transform(trans){}
+        TransformComponent(glm::vec3 translation, glm::vec3 rotation, glm::vec3 scale)
+        : translation(translation), rotation(rotation) ,scale(scale) {}
+        TransformComponent(glm::vec3 translation) : translation(translation) {}
         TransformComponent() = default;
-        glm::mat4 transform{1.0f};
+        glm::vec3 translation{0.0f}, rotation{0.0f}, scale{1.0f};
+
+        [[nodiscard]] inline auto getTransform() const
+        {
+            glm::mat4 transform(1.0f);
+            transform = glm::translate(transform, translation);
+            transform = glm::rotate(transform, rotation.x, glm::vec3(1.0f, 0.0f, 0.0f));
+            transform = glm::rotate(transform, rotation.y, glm::vec3(0.0f, 1.0f, 0.0f));
+            transform = glm::rotate(transform, rotation.z, glm::vec3(0.0f, 0.0f, 1.0f));
+            transform = glm::scale(transform, scale);
+
+            return transform;
+        }
     };
 
     struct ModelComponent

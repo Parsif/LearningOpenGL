@@ -54,12 +54,14 @@ namespace opengl
     void ImGuiLayer::onImGuiRender(const FrameBuffer& frame_buffer)
     {
         renderDockingBegin();
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 8));
         static bool show = true;
             ImGui::Begin("SceneView");
             auto texture_id = frame_buffer.getColorAttachmentId();
             ImGui::Image((void*)texture_id,  ImGui::GetWindowSize(), ImVec2(0, 1), ImVec2(1, 0));
             ImGui::End();
             m_scene_hierarchy_panel.onImGuiRender();
+        ImGui::PopStyleVar();
         renderDockingEnd();
     }
 

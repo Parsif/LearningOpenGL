@@ -35,7 +35,7 @@ namespace opengl
             }
             auto [transform_comp, model_comp] = group.get<TransformComponent, ModelComponent>(entity);
             Renderer3D::renderModel(m_model_library.getModel(model_comp.model_path),
-                                    transform_comp.transform, m_active_camera->getViewProjection(),
+                                    transform_comp.getTransform(), m_active_camera->getViewProjection(),
                                     m_active_camera->getGetPosition(), lighting_program);
         }
 

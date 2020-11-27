@@ -21,7 +21,7 @@ namespace opengl
 
     void Application::run()
     {
-        m_window = Window(1200, 800, "LearnOpenGL");
+        m_window = Window(1400, 1000, "LearnOpenGL");
         if(glewInit() != GLEW_OK)
         {
             std::cout << "GLEW init failed\n";
@@ -39,9 +39,10 @@ namespace opengl
         m_active_scene->addComponent<ModelComponent>(floor_entity, "../res/floor/floor.obj");
 
         auto point_light_e = m_active_scene->createEntity("Point light");
-        m_active_scene->addComponent<PointLightComponent>(point_light_e, glm::vec3(1.0f, 0.9f, 0.1f), glm::vec3(0.7f), glm::vec3(0.7f),
-                                                glm::vec3(0.0f, 4.0f, 0.0f),
-                                                1.0f, 0.09f, 0.032f);
+        m_active_scene->addComponent<PointLightComponent>(point_light_e, glm::vec3(1.0f, 0.9f, 0.1f),
+                                                          glm::vec3(0.7f), glm::vec3(0.7f),
+                                                          glm::vec3(0.0f, 4.0f, 0.0f),
+                                                        1.0f, 0.09f, 0.032f);
 
         glEnable(GL_DEBUG_OUTPUT);
         glDebugMessageCallback(messageCallback, nullptr);

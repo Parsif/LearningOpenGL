@@ -1,6 +1,7 @@
 #include "SceneHierarchyPanel.h"
 
 #include <imgui/imgui.h>
+#include <glm/gtc/type_ptr.hpp>
 
 namespace opengl
 {
@@ -53,7 +54,33 @@ namespace opengl
 
         if(m_scene->m_registry.has<TransformComponent>(entity))
         {
-//            ImGui::DragFloat3()
+            auto& transform_component = m_scene->m_registry.get<TransformComponent>(entity);
+
+            if(ImGui::TreeNodeEx((void*)typeid(TransformComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Transform"))
+            {
+                ImGui::DragFloat3("Position", glm::value_ptr(transform_component.translation), 0.1f);
+                ImGui::DragFloat3("Rotation", glm::value_ptr(transform_component.rotation), 0.1f);
+                ImGui::DragFloat3("Scale", glm::value_ptr(transform_component.scale), 0.1f);
+
+                ImGui::TreePop();
+            }
+        }
+
+        if(m_scene->m_registry.has<PointLightComponent>(entity))
+        {
+            if(ImGui::TreeNodeEx((void*)typeid(PointLightComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Point light"))
+            {
+                auto &point_light_component = m_scene->m_registry.get<PointLightComponent>(entity);
+                ImGui::DragFloat3("Position", glm::value_ptr(point_light_component.position), 0.1f);
+                ImGui::DragFloat3("Ambient", glm::value_ptr(point_light_component.ambient), 0.1f);
+                ImGui::DragFloat3("Diffuse", glm::value_ptr(point_light_component.diffuse), 0.1f);
+                ImGui::DragFloat3("Specular", glm::value_ptr(point_light_component.specular), 0.1f);
+                ImGui::DragFloat("Constant", &point_light_component.constant, 0.01f);
+                ImGui::DragFloat("Linear", &point_light_component.linear, 0.01f);
+                ImGui::DragFloat("Quadratic", &point_light_component.quadratic, 0.01f);
+
+                ImGui::TreePop();
+            }
         }
     }
 }
