@@ -7,13 +7,10 @@
 
 namespace opengl
 {
-    ImGuiLayer::ImGuiLayer(const std::shared_ptr<Scene>& scene)
+    void ImGuiLayer::onAttach(const std::shared_ptr<Scene>& scene)
     {
-        m_scene_hierarchy_panel = SceneHierarchyPanel(scene);
-    }
+        s_scene_hierarchy_panel = SceneHierarchyPanel(scene);
 
-    void ImGuiLayer::onAttach()
-    {
         // Setup Dear ImGui context
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
@@ -57,10 +54,11 @@ namespace opengl
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 8));
         static bool show = true;
             ImGui::Begin("SceneView");
+        s_scene_view_hovered = ImGui::IsWindowHovered();
             auto texture_id = frame_buffer.getColorAttachmentId();
             ImGui::Image((void*)texture_id,  ImGui::GetWindowSize(), ImVec2(0, 1), ImVec2(1, 0));
             ImGui::End();
-            m_scene_hierarchy_panel.onImGuiRender();
+            s_scene_hierarchy_panel.onImGuiRender();
         ImGui::PopStyleVar();
         renderDockingEnd();
     }

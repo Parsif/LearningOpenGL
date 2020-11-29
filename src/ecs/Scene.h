@@ -15,18 +15,14 @@ namespace opengl
         explicit Scene(const Window& window);
         void onUpdate();
 
-        [[nodiscard]] inline auto createEntity(const std::string& tag_name)
-        {
-            auto entity = m_registry.create();
-            addComponent<TagComponent>(entity, tag_name);
-            return entity;
-        }
-
         template<class T, class... Args>
         T& addComponent(entt::entity entity, Args&&... args)
         {
             return m_registry.emplace<T>(entity, std::forward<Args>(args)...);
         }
+
+        entt::entity createEntity(const std::string& tag_name);
+        void deleteComponent(entt::entity entity);
 
         [[nodiscard]] inline auto& getActiveCamera() const { return m_active_camera; }
 

@@ -1,9 +1,17 @@
 #include "EventHandler.h"
 
+#include "layers/ImGuiLayer.h"
+
 namespace opengl
 {
     void EventHandler::mouseCallback(GLFWwindow *window, double xpos, double ypos)
     {
+        if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_RELEASE ||
+            !ImGuiLayer::isSceneViewHovered())
+        {
+            return;
+        }
+
         float xoffset = xpos - m_mouse_pos.x;
         float yoffset = m_mouse_pos.y - ypos;
         m_mouse_pos.x = xpos;
@@ -25,6 +33,7 @@ namespace opengl
         front.x = cos(glm::radians(m_mouse_pos.yaw)) * cos(glm::radians(m_mouse_pos.pitch));
         front.y = sin(glm::radians(m_mouse_pos.pitch));
         front.z = sin(glm::radians(m_mouse_pos.yaw)) * cos(glm::radians(m_mouse_pos.pitch));
+
         m_camera->rotate(front);
     }
 

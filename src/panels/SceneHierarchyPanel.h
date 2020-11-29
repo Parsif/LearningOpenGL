@@ -2,6 +2,8 @@
 
 #include "ecs/Scene.h"
 
+#include <imgui/imgui.h>
+
 namespace opengl
 {
     class SceneHierarchyPanel
@@ -19,6 +21,7 @@ namespace opengl
         std::shared_ptr<Scene> m_scene;
         entt::entity m_selected_entity{};
     };
+
 }
 
 

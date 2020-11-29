@@ -1,5 +1,6 @@
 #include "Renderer3D.h"
 
+
 namespace opengl
 {
 
@@ -14,15 +15,31 @@ namespace opengl
 
 
 
-    void Renderer3D::renderPointLight(PointLightComponent point_light, const ShaderProgram &shader_program)
+    void Renderer3D::renderPointLight(PointLightComponent point_light, const ShaderProgram &light_program,
+                                      const ShaderProgram &basic_program)
     {
-        shader_program.uniformVec3f("u_point_light.ambient", point_light.ambient);
-        shader_program.uniformVec3f("u_point_light.diffuse", point_light.diffuse);
-        shader_program.uniformVec3f("u_point_light.specular", point_light.specular);
-        shader_program.uniformVec3f("u_point_light.position", point_light.position);
-        shader_program.uniform1f("u_point_light.constant", point_light.constant);
-        shader_program.uniform1f("u_point_light.linear", point_light.linear);
-        shader_program.uniform1f("u_point_light.quadratic", point_light.quadratic);
+        light_program.uniformVec3f("u_point_light.albedo", point_light.albedo);
+        light_program.uniformVec3f("u_point_light.position", point_light.position);
+        light_program.uniform1f("u_point_light.constant", point_light.constant);
+        light_program.uniform1f("u_point_light.linear", point_light.linear);
+        light_program.uniform1f("u_point_light.quadratic", point_light.quadratic);
+
+
+        float offset = 15;
+        float lines[] = {
+                point_light.position.x - offset, point_light.position.y, point_light.position.z,
+                point_light.position.x + offset, point_light.position.y, point_light.position.z,
+                point_light.position.x, point_light.position.y - offset, point_light.position.z,
+                point_light.position.x, point_light.position.y + offset, point_light.position.z,
+                point_light.position.x, point_light.position.y, point_light.position.z - offset,
+                point_light.position.x, point_light.position.y, point_light.position.z + offset,
+        };
+        VertexBuffer vertex_buffer(lines, sizeof(lines));
+        BufferLayout layout = {
+                {ShaderDataType::Float3}
+        };
+        basic_program.useShaderProgram();
+        glDrawArrays(GL_LINES, 0, 2);
     }
 }
 

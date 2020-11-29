@@ -9,9 +9,11 @@ namespace opengl
     public:
         ShaderLibrary();
 
-        [[nodiscard]] inline const auto& getLightningProgram() const { return lightning_program; }
+        [[nodiscard]] inline const auto& getBasicProgram() const { return m_basic_program; }
+        [[nodiscard]] inline const auto& getLightningProgram() const { return m_lightning_program; }
     private:
-        ShaderProgram lightning_program;
+        ShaderProgram m_basic_program;
+        ShaderProgram m_lightning_program;
     };
 }
 

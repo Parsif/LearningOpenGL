@@ -42,14 +42,14 @@ namespace opengl
 
     struct PointLightComponent
     {
-        PointLightComponent(const glm::vec3& position,  glm::vec3 ambient,  glm::vec3 diffuse, glm::vec3 specular,
+        PointLightComponent(const glm::vec3& position,  glm::vec3 albedo,
                             float constant, float linear, float quadratic)
-                : position(position), ambient(ambient),  diffuse(diffuse), specular(specular),
+                : position(position), albedo(albedo),
                   constant(constant), linear(linear), quadratic(quadratic)
         {}
         PointLightComponent() = default;
         glm::vec3 position;
-        glm::vec3 ambient, diffuse, specular;
+        glm::vec3 albedo;
         float constant, linear, quadratic;
     };
 }

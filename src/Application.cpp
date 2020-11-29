@@ -1,5 +1,6 @@
 #include "Application.h"
 #include "EventHandler.h"
+#include "layers/ImGuiLayer.h"
 
 namespace opengl
 {
@@ -29,7 +30,6 @@ namespace opengl
         }
 
         m_active_scene = std::make_shared<Scene>(m_window);
-        m_ImGuiLayer = ImGuiLayer(m_active_scene);
         auto backpack_e = m_active_scene->createEntity("Backpack");
         m_active_scene->addComponent<TransformComponent>(backpack_e);
         m_active_scene->addComponent<ModelComponent>(backpack_e, "../res/backpack/backpack.obj");
@@ -40,8 +40,7 @@ namespace opengl
 
         auto point_light_e = m_active_scene->createEntity("Point light");
         m_active_scene->addComponent<PointLightComponent>(point_light_e, glm::vec3(1.0f, 0.9f, 0.1f),
-                                                          glm::vec3(0.7f), glm::vec3(0.7f),
-                                                          glm::vec3(0.0f, 4.0f, 0.0f),
+                                                          glm::vec3(1.0f, 1.0f, 1.0f),
                                                         1.0f, 0.09f, 0.032f);
 
         glEnable(GL_DEBUG_OUTPUT);
@@ -52,7 +51,7 @@ namespace opengl
         EventHandler::init(m_window.getGLFWwindow(), m_active_scene->getActiveCamera(),
                            glm::vec2( m_window.getWidth() / 2, m_window.getHeight() / 2));
 
-        m_ImGuiLayer.onAttach();
+        ImGuiLayer::onAttach(m_active_scene);
 
         FrameBufferSpecifications specifications;
         specifications.width = m_window.getWidth();
@@ -67,9 +66,9 @@ namespace opengl
             m_active_scene->onUpdate();
             frame_buffer.unbind();
 
-            m_ImGuiLayer.begin();
-            m_ImGuiLayer.onImGuiRender(frame_buffer);
-            m_ImGuiLayer.end();
+            ImGuiLayer::begin();
+            ImGuiLayer::onImGuiRender(frame_buffer);
+            ImGuiLayer::end();
 
             EventHandler::processInput(m_window.getGLFWwindow());
             glfwSwapBuffers(m_window.getGLFWwindow());

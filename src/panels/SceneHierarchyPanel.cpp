@@ -1,6 +1,5 @@
 #include "SceneHierarchyPanel.h"
 
-#include <imgui/imgui.h>
 #include <glm/gtc/type_ptr.hpp>
 
 namespace opengl
@@ -16,7 +15,16 @@ namespace opengl
         {
             drawEntityNode(entity);
         });
+        if(ImGui::BeginPopupContextWindow(0, 1, false))
+        {
+            if (ImGui::MenuItem("Create empty entity"))
+                m_scene->createEntity("Empty entity");
+
+            ImGui::EndPopup();
+        }
+
         ImGui::End();
+
         ImGui::Begin("Properties");
         drawEntityProperties(m_selected_entity);
         ImGui::End();
@@ -32,9 +40,27 @@ namespace opengl
         {
             m_selected_entity = entity;
         }
+
+
+        bool entityDeleted = false;
+        if (ImGui::BeginPopupContextItem())
+        {
+            if (ImGui::MenuItem("Delete entity"))
+                entityDeleted = true;
+
+            ImGui::EndPopup();
+        }
+
         if(opened)
         {
             ImGui::TreePop();
+        }
+
+        if (entityDeleted)
+        {
+            if(entity == m_selected_entity)
+                m_selected_entity = {};
+            m_scene->deleteComponent(entity);
         }
     }
 
@@ -72,9 +98,7 @@ namespace opengl
             {
                 auto &point_light_component = m_scene->m_registry.get<PointLightComponent>(entity);
                 ImGui::DragFloat3("Position", glm::value_ptr(point_light_component.position), 0.1f);
-                ImGui::DragFloat3("Ambient", glm::value_ptr(point_light_component.ambient), 0.1f);
-                ImGui::DragFloat3("Diffuse", glm::value_ptr(point_light_component.diffuse), 0.1f);
-                ImGui::DragFloat3("Specular", glm::value_ptr(point_light_component.specular), 0.1f);
+                ImGui::DragFloat3("Albedo", glm::value_ptr(point_light_component.albedo), 0.1f);
                 ImGui::DragFloat("Constant", &point_light_component.constant, 0.01f);
                 ImGui::DragFloat("Linear", &point_light_component.linear, 0.01f);
                 ImGui::DragFloat("Quadratic", &point_light_component.quadratic, 0.01f);

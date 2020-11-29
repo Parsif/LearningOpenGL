@@ -14,7 +14,7 @@ add_executable(LearningOpenGL
         src/Camera.cpp src/buffers/VertexArray.cpp src/EventHandler.cpp src/EventHandler.h src/global.h
         src/model/Mesh.cpp src/model/Mesh.h src/model/Model.cpp src/model/Model.h src/buffers/Buffer.cpp src/buffers/Buffer.h
         src/Window.cpp src/Window.h src/renderer/Renderer3D.cpp src/renderer/Renderer3D.h
-        src/layers/Layer.h src/pch.h src/layers/ImGuiLayer.cpp src/layers/ImGuiLayer.h
+        src/pch.h src/layers/ImGuiLayer.cpp src/layers/ImGuiLayer.h
         src/buffers/FrameBuffer.cpp src/buffers/FrameBuffer.h src/types.h
         src/ShaderLibrary.cpp src/ShaderLibrary.h src/ecs/Scene.cpp src/ecs/Scene.h vendor/entt/entt.h src/ecs/Components.h src/ModelLibrary.cpp src/ModelLibrary.h src/panels/SceneHierarchyPanel.cpp src/panels/SceneHierarchyPanel.h)
 

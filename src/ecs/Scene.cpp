@@ -1,7 +1,6 @@
 #include "Scene.h"
 
 #include "renderer/Renderer3D.h"
-#include "Components.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -27,12 +26,20 @@ namespace opengl
         auto view = m_registry.view<PointLightComponent>();
 
         auto& lighting_program = m_shader_library.getLightningProgram();
+
         lighting_program.useShaderProgram();
-        for(auto entity: group) {
-            for(auto entity1 : view)
-            {
-                Renderer3D::renderPointLight(view.get<PointLightComponent>(entity1), lighting_program);
-            }
+        if (view.empty())
+        {
+            Renderer3D::renderPointLight(PointLightComponent(), lighting_program, m_shader_library.getBasicProgram());
+        }
+
+        for(auto entity1 : view)
+        {
+            Renderer3D::renderPointLight(view.get<PointLightComponent>(entity1), lighting_program, m_shader_library.getBasicProgram());
+        }
+
+        for(auto entity : group)
+        {
             auto [transform_comp, model_comp] = group.get<TransformComponent, ModelComponent>(entity);
             Renderer3D::renderModel(m_model_library.getModel(model_comp.model_path),
                                     transform_comp.getTransform(), m_active_camera->getViewProjection(),
@@ -42,5 +49,16 @@ namespace opengl
 
     }
 
+    entt::entity Scene::createEntity(const std::string &tag_name)
+    {
+        auto entity = m_registry.create();
+        addComponent<TagComponent>(entity, tag_name);
+        return entity;
+    }
+
+    void Scene::deleteComponent(entt::entity entity)
+    {
+        m_registry.destroy(entity);
+    }
 
 }

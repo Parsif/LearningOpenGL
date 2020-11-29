@@ -13,7 +13,6 @@
 
 #include "ecs/Scene.h"
 
-#include "layers/ImGuiLayer.h"
 
 
 namespace opengl
@@ -33,7 +32,6 @@ namespace opengl
 
     private:
         Window m_window;
-        ImGuiLayer m_ImGuiLayer;
         std::shared_ptr<Scene> m_active_scene;
         static Application* s_instance;
 
